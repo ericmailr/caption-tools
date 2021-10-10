@@ -5,6 +5,7 @@ const submitRosterButton = document.getElementById("submitRoster");
 const rawRosterInput = document.getElementById("rawRoster");
 const rosterResult = document.getElementById("rosterResult");
 
+console.log("hellO");
 const prepTime = 15;
 
 let rosterOutput = "";
@@ -45,11 +46,12 @@ const formatDate = (dateObject) => {
 
 const getCSV = () => {
   const rawSchedule = rawScheduleInput.value;
-  if (rawSchedule == "") {
+  if (rawSchedule != "") {
     let dates = rawSchedule.match(/((\d\d)|(\d))\/((\d\d)|(\d))\/20\d\d/g);
     let times = rawSchedule.match(/((\d\d)|(\d)):\d\d(A|P)M/g);
     let descriptions = rawSchedule.match(/Description: .*/g);
 
+    console.log(dates);
     if (descriptions) {
       descriptions = descriptions.map((d) => d.substring(13, d.length));
     }
@@ -70,6 +72,8 @@ const getCSV = () => {
       dates[i] = new Date(dates[i]);
     });
 
+    console.log("1" + dates);
+
     times.forEach((t, i) => {
       times[i] = militarizeTime(t);
     });
@@ -85,14 +89,10 @@ const getCSV = () => {
           let newHour = hour - 1;
           if (hour == 0) {
             newHour = 23;
-            let dayOfMonth = parseInt(dates[i / 2].substring(3, 5)) - 1;
-            dates[i / 2] =
-              dates[i / 2].substring(0, 3) +
-              dayOfMonth +
-              dates[i / 2].substring(
-                dates[i / 2].length - 5,
-                dates[i / 2].length
-              );
+
+            let tempDate = new Date(dates[i / 2]);
+            tempDate.setDate(tempDate.getDate() - 1);
+            dates[i / 2] = tempDate;
           }
           if (newHour < 10) {
             newHour = "0" + newHour;
@@ -122,26 +122,26 @@ const getCSV = () => {
         }
       }
     });
+
+    dates.forEach((date, i) => {
+      dates[i] = formatDate(new Date(dates[i]));
+      endDates[i] = formatDate(new Date(endDates[i]));
+    });
+
+    let csvContent = "";
+    csvContent +=
+      "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
+
+    dates.forEach((date, i) => {
+      csvContent += `Work, ${dates[i]}, ${times[2 * i]}, ${endDates[i]}, ${
+        times[2 * i + 1]
+      }, false, ${descriptions?.[i]}, true,\n`;
+    });
+    console.log(csvContent);
+    var encodedUri = encodeURI("data:text/csv;charset=utf-8,\n" + csvContent);
+    window.open(encodedUri);
+    result.innerHTML = csvContent;
   }
-
-  dates.forEach((date, i) => {
-    dates[i] = formatDate(new Date(dates[i]));
-    endDates[i] = formatDate(new Date(endDates[i]));
-  });
-
-  let csvContent = "";
-  csvContent +=
-    "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
-
-  dates.forEach((date, i) => {
-    csvContent += `Work, ${dates[i]}, ${times[2 * i]}, ${endDates[i]}, ${
-      times[2 * i + 1]
-    }, false, ${descriptions?.[i]}, true,\n`;
-  });
-  console.log(csvContent);
-  var encodedUri = encodeURI("data:text/csv;charset=utf-8,\n" + csvContent);
-  window.open(encodedUri);
-  result.innerHTML = csvContent;
 };
 
 submitScheduleButton.addEventListener("click", getCSV);
