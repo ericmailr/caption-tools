@@ -138,7 +138,7 @@ const getCSV = () => {
       }, false, ${descriptions?.[i]}, true,\n`;
     });
     console.log(csvContent);
-    var encodedUri = encodeURI("data:text/csv;charset=utf-8,\n" + csvContent);
+    var encodedUri = encodeURI("data:text/csv;charset=utf-8" + csvContent);
     window.open(encodedUri);
     result.innerHTML = csvContent;
   }
