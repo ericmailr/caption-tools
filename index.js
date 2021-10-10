@@ -4,27 +4,59 @@ const result = document.getElementById("result");
 const submitRosterButton = document.getElementById("submitRoster");
 const rawRosterInput = document.getElementById("rawRoster");
 const rosterResult = document.getElementById("rosterResult");
+const scheduleContainerDiv = document.getElementById("scheduleContainer");
+const teamNameInput = document.getElementById("team-name-input");
+const suffixInput = document.getElementById("suffix-input");
 
-console.log("hellO");
 const prepTime = 15;
 
-let rosterOutput = "";
+const getFileSuffix = () => {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
+  var hh = today.getHours();
+  var m = today.getMinutes();
+
+  return `${mm}${dd}${yyyy}${hh}${m}`;
+};
+
 const getRoster = () => {
+  let wordList = "";
   let rawRoster = rawRosterInput.value;
   let inputArray = rawRoster.split("\n");
   console.log(inputArray);
   inputArray.forEach((fullName) => {
     if (/\S/.test(fullName)) {
+      let suffix = suffixInput.value === "" ? "praim" : suffixInput.value;
       let names = fullName.split(" ");
       let lastName = names.at(-1);
       console.log(fullName);
-      console.log(fullName + "\\" + fullName + " praim");
+      console.log(fullName + "\\" + fullName + " " + suffix);
       console.log(lastName);
-      console.log(lastName + "\\" + lastName + " praim");
-      rosterOutput += `${fullName}\n${fullName}\\${fullName} praim\n${lastName}\n${lastName}\\${lastName} praim\n`;
+      console.log(lastName + "\\" + lastName + " " + suffix);
+      wordList += `${fullName}\n${fullName}\\${fullName} ${suffix}\n${lastName}\n${lastName}\\${lastName} ${suffix}\n`;
     }
   });
-  rosterResult.innerHTML = rosterOutput;
+  //rosterResult.innerHTML = wordList;
+
+  window.URL = window.webkitURL || window.URL;
+  var contentType = "text/plain";
+  var rosterFile = new Blob([rawRoster], { type: contentType });
+  var wordListFile = new Blob([wordList], { type: contentType });
+  var a1 = document.createElement("a");
+  var a2 = document.createElement("a");
+  let teamName = teamNameInput.value;
+  a1.download = `${teamName} roster.txt`;
+  a2.download = `${teamName} word list.txt`;
+  a1.href = window.URL.createObjectURL(rosterFile);
+  a2.href = window.URL.createObjectURL(wordListFile);
+  a1.dataset.downloadurl = [contentType, a1.download, a1.href].join(":");
+  a2.dataset.downloadurl = [contentType, a2.download, a2.href].join(":");
+  document.body.appendChild(a1);
+  document.body.appendChild(a2);
+  a1.click();
+  a2.click();
 };
 
 submitRosterButton.addEventListener("click", getRoster);
@@ -129,8 +161,8 @@ const getCSV = () => {
     });
 
     let csvContent = "";
-    //csvContent +=
-    // "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
+    csvContent +=
+      "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
 
     dates.forEach((date, i) => {
       csvContent += `Work, ${dates[i]}, ${times[2 * i]}, ${endDates[i]}, ${
@@ -138,9 +170,16 @@ const getCSV = () => {
       }, false, ${descriptions?.[i]}, true,\n`;
     });
     console.log(csvContent);
-    var encodedUri = encodeURI("data:text/csv;charset=utf-8" + csvContent);
-    window.open(encodedUri);
-    result.innerHTML = csvContent;
+
+    window.URL = window.webkitURL || window.URL;
+    var contentType = "text/csv";
+    var csvFile = new Blob([csvContent], { type: contentType });
+    var a = document.createElement("a");
+    a.download = `work-schedule-${getFileSuffix()}.csv`;
+    a.href = window.URL.createObjectURL(csvFile);
+    a.dataset.downloadurl = [contentType, a.download, a.href].join(":");
+    document.body.appendChild(a);
+    a.click();
   }
 };
 

@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Vitac Tools</title>
+    <title>Caption Tools</title>
     <link href="main.css" rel="stylesheet" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
   </head>
   <body>
     <div id="container">
       <div id="schedule-container">
-        <label>Paste your schedule</label>
-        <input id="submitSchedule" type="submit" value="Submit" />
-        <textarea type="text" rows="30" cols="50" id="rawSchedule"></textarea
-        ><br /><br />
+        <textarea
+          placeholder="Paste your schedule"
+          type="text"
+          rows="30"
+          cols="60"
+          id="rawSchedule"
+        ></textarea>
+        <input
+          id="submitSchedule"
+          type="submit"
+          value="Get CSV for Google Calendar"
+        />
         <p id="result" style="white-space: pre-line"></p>
       </div>
       <div id="roster-container">
-        <label>Paste Roster</label>
-        <input id="submitRoster" type="submit" value="Submit" />
-        <textarea type="text" rows="30" cols="50" id="rawRoster"></textarea
-        ><br /><br />
+        <input
+          type="text"
+          placeholder="Enter Team Name for Filename (optional)"
+          id="team-name-input"
+        />
+        <input
+          type="text"
+          placeholder="Word List Suffix (defaults to 'praim')"
+          id="suffix-input"
+        />
+        <textarea
+          placeholder="Paste roster like this:&#10;Bugs Bunny&#10;Jimmy Buckets&#10;Luka Doncic&#10;Michael Jordan&#10;"
+          type="text"
+          rows="24"
+          cols="60"
+          id="rawRoster"
+        ></textarea>
+        <input
+          id="submitRoster"
+          type="submit"
+          value="Get Roster and Word List"
+        />
         <p id="rosterResult" style="white-space: pre-line"></p>
       </div>
     </div>
