@@ -129,8 +129,8 @@ const getCSV = () => {
     });
 
     let csvContent = "";
-    csvContent +=
-      "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
+    //csvContent +=
+    // "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
 
     dates.forEach((date, i) => {
       csvContent += `Work, ${dates[i]}, ${times[2 * i]}, ${endDates[i]}, ${
