@@ -69,8 +69,8 @@ const getRoster = () => {
   a2.dataset.downloadurl = [contentType, a2.download, a2.href].join(":");
   document.body.appendChild(a1);
   document.body.appendChild(a2);
-  //a1.click();
-  //a2.click();
+  a1.click();
+  a2.click();
 };
 
 submitRosterButton.addEventListener("click", getRoster);
