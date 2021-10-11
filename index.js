@@ -1,3 +1,8 @@
+//const sdv = require("sportsdataverse");
+//const gameId = 401260281;
+//const rresult = await sdv.cbb.getPlayByPlay(gameId);
+//console.log(rresult);
+
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
 const result = document.getElementById("result");
@@ -27,10 +32,19 @@ const getRoster = () => {
   let inputArray = rawRoster.split("\n");
   console.log(inputArray);
   inputArray.forEach((fullName) => {
-    if (/\S/.test(fullName)) {
+    fullName = fullName.trim();
+    if (fullName != "") {
+      let lastName = "";
       let suffix = suffixInput.value === "" ? "praim" : suffixInput.value;
-      let names = fullName.split(" ");
-      let lastName = names.at(-1);
+      if (fullName.includes(",")) {
+        let names = fullName.split(", ");
+        lastName = names[0];
+        fullName = names[1] + " " + names[0];
+      } else {
+        let names = fullName.split(" ");
+        lastName = names.at(-1);
+      }
+
       console.log(fullName);
       console.log(fullName + "\\" + fullName + " " + suffix);
       console.log(lastName);
@@ -55,8 +69,8 @@ const getRoster = () => {
   a2.dataset.downloadurl = [contentType, a2.download, a2.href].join(":");
   document.body.appendChild(a1);
   document.body.appendChild(a2);
-  a1.click();
-  a2.click();
+  //a1.click();
+  //a2.click();
 };
 
 submitRosterButton.addEventListener("click", getRoster);
