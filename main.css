@@ -48,7 +48,6 @@ a {
 #schedule-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
 }
 
 #schedule-container > * {
@@ -89,7 +88,7 @@ a {
 }
 
 input {
-  height: 4em;
+  height: 2em;
   font-size: 1.3em;
   margin-bottom: 15px;
   border-radius: 0.5;
@@ -102,6 +101,7 @@ input {
 
 textarea {
   outline: none;
+  border: none;
   box-shadow: 5px 5px 13px -5px rgba(0, 0, 0, 0.8);
   padding: 7px;
   margin-bottom: 8px;
@@ -116,5 +116,4 @@ input[type="submit"] {
 .inputFieldsContainer {
   display: flex;
   flex-direction: column;
-  height: 60%;
 }
