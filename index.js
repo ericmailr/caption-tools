@@ -26,16 +26,36 @@ const getFileSuffix = () => {
   return `${mm}${dd}${yyyy}${hh}${m}`;
 };
 
+const compareStrings = (a, b) => {
+  if (a < b) return -1;
+  if (a > b) return 1;
+
+  return 0;
+};
+
+const compare = (a, b) => {
+  const splitA = a.split(" ");
+  const splitB = b.split(" ");
+  const lastA = splitA[splitA.length - 1];
+  const lastB = splitB[splitB.length - 1];
+
+  return lastA === lastB
+    ? compareStrings(splitA[0], splitB[0])
+    : compareStrings(lastA, lastB);
+};
+
 const getRoster = () => {
   let wordList = "";
+  let roster = "";
+  let suffix = suffixInput.value === "" ? "praim" : suffixInput.value;
   let rawRoster = rawRosterInput.value;
+  let prevLastNameFirstLetter = "a";
   let inputArray = rawRoster.split("\n");
-  console.log(inputArray);
+  let fullNamesArray = [];
   inputArray.forEach((fullName) => {
     fullName = fullName.trim();
     if (fullName != "") {
       let lastName = "";
-      let suffix = suffixInput.value === "" ? "praim" : suffixInput.value;
       if (fullName.includes(",")) {
         let names = fullName.split(", ");
         lastName = names[0];
@@ -44,19 +64,23 @@ const getRoster = () => {
         let names = fullName.split(" ");
         lastName = names.at(-1);
       }
-
-      console.log(fullName);
-      console.log(fullName + "\\" + fullName + " " + suffix);
-      console.log(lastName);
-      console.log(lastName + "\\" + lastName + " " + suffix);
+      fullNamesArray.push(fullName);
+      if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+        prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
+        roster += "\n";
+      }
+      roster += fullName + "\n";
       wordList += `${fullName}\n${fullName}\\${fullName} ${suffix}\n${lastName}\n${lastName}\\${lastName} ${suffix}\n`;
     }
   });
-  //rosterResult.innerHTML = wordList;
+  console.log(wordList);
+  console.log(roster);
+  let alphabeticalRoster = fullNamesArray.sort(compare);
+  console.log(alphabeticalRoster);
 
   window.URL = window.webkitURL || window.URL;
   var contentType = "text/plain";
-  var rosterFile = new Blob([rawRoster], { type: contentType });
+  var rosterFile = new Blob([roster], { type: contentType });
   var wordListFile = new Blob([wordList], { type: contentType });
   var a1 = document.createElement("a");
   var a2 = document.createElement("a");
@@ -97,7 +121,6 @@ const getCSV = () => {
     let times = rawSchedule.match(/((\d\d)|(\d)):\d\d(A|P)M/g);
     let descriptions = rawSchedule.match(/Description: .*/g);
 
-    console.log(dates);
     if (descriptions) {
       descriptions = descriptions.map((d) => d.substring(13, d.length));
     }
@@ -117,8 +140,6 @@ const getCSV = () => {
     dates.forEach((date, i) => {
       dates[i] = new Date(dates[i]);
     });
-
-    console.log("1" + dates);
 
     times.forEach((t, i) => {
       times[i] = militarizeTime(t);

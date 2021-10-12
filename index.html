@@ -10,7 +10,7 @@
     <div id="container">
       <div id="schedule-container">
         <textarea
-          placeholder="Paste your schedule"
+          placeholder="Paste your schedule&#10;&#10;This creates a .csv file that can be imported to your google calendar (https://calendar.google.com/calendar/u/0/r/settings/export)"
           type="text"
           rows="30"
           cols="60"
@@ -21,6 +21,11 @@
           type="submit"
           value="Get CSV for Google Calendar"
         />
+        <a
+          id="googleLink"
+          href="https://calendar.google.com/calendar/u/0/r/settings/export"
+          >Go to Google Calendar import page</a
+        >
         <p id="result" style="white-space: pre-line"></p>
       </div>
       <div id="roster-container">
