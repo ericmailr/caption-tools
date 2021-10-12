@@ -5,10 +5,8 @@
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
-const result = document.getElementById("result");
 const submitRosterButton = document.getElementById("submitRoster");
 const rawRosterInput = document.getElementById("rawRoster");
-const rosterResult = document.getElementById("rosterResult");
 const scheduleContainerDiv = document.getElementById("scheduleContainer");
 const teamNameInput = document.getElementById("team-name-input");
 const suffixInput = document.getElementById("suffix-input");
@@ -47,13 +45,15 @@ const compare = (a, b) => {
 const getRoster = () => {
   let wordList = "";
   let roster = "";
-  let suffix = suffixInput.value === "" ? "praim" : suffixInput.value;
+  let suffix = suffixInput.value === "" ? "prame" : suffixInput.value;
   let rawRoster = rawRosterInput.value;
   let prevLastNameFirstLetter = "a";
   let inputArray = rawRoster.split("\n");
   let fullNamesArray = [];
   inputArray.forEach((fullName) => {
     fullName = fullName.trim();
+    fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    fullName = fullName.replace(/[^a-zA-Z '\-]/g, "");
     if (fullName != "") {
       let lastName = "";
       if (fullName.includes(",")) {
@@ -65,18 +65,23 @@ const getRoster = () => {
         lastName = names.at(-1);
       }
       fullNamesArray.push(fullName);
-      if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
-        prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
-        roster += "\n";
-      }
-      roster += fullName + "\n";
+
       wordList += `${fullName}\n${fullName}\\${fullName} ${suffix}\n${lastName}\n${lastName}\\${lastName} ${suffix}\n`;
     }
   });
   console.log(wordList);
-  console.log(roster);
   let alphabeticalRoster = fullNamesArray.sort(compare);
   console.log(alphabeticalRoster);
+  alphabeticalRoster.forEach((fullName) => {
+    let names = fullName.split(" ");
+    lastName = names.at(-1);
+    if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+      prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
+      roster += "\n";
+    }
+    roster += fullName + "\n";
+  });
+  console.log(roster);
 
   window.URL = window.webkitURL || window.URL;
   var contentType = "text/plain";

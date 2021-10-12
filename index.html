@@ -9,49 +9,54 @@
   <body>
     <div id="container">
       <div id="schedule-container">
-        <textarea
-          placeholder="Paste your schedule&#10;&#10;This creates a .csv file that can be imported to your google calendar (https://calendar.google.com/calendar/u/0/r/settings/export)"
-          type="text"
-          rows="30"
-          cols="60"
-          id="rawSchedule"
-        ></textarea>
+        <div class="inputFieldsContainer">
+          <textarea
+            placeholder="Paste your schedule&#10;&#10;Creates a .csv file for importing to your google calendar."
+            type="text"
+            rows="30"
+            cols="80"
+            id="rawSchedule"
+          ></textarea>
+        </div>
         <input
           id="submitSchedule"
           type="submit"
           value="Get CSV for Google Calendar"
         />
-        <a
-          id="googleLink"
-          href="https://calendar.google.com/calendar/u/0/r/settings/export"
-          >Go to Google Calendar import page</a
-        >
-        <p id="result" style="white-space: pre-line"></p>
+        <div id="googleLinkContainer">
+          <a
+            id="googleLink"
+            target="_blank"
+            href="https://calendar.google.com/calendar/u/0/r/settings/export"
+            >Google Calendar import page</a
+          >
+        </div>
       </div>
       <div id="roster-container">
-        <input
-          type="text"
-          placeholder="Enter Team Name for Filename (optional)"
-          id="team-name-input"
-        />
-        <input
-          type="text"
-          placeholder="Word List Suffix (defaults to 'praim')"
-          id="suffix-input"
-        />
-        <textarea
-          placeholder="Paste roster like this:&#10;&#10;Lebron James&#10;Michael Jordan&#10;&#10;Or, like this:&#10;&#10;James, Lebron&#10;Jordan, Michael&#10;"
-          type="text"
-          rows="24"
-          cols="60"
-          id="rawRoster"
-        ></textarea>
+        <div class="inputFieldsContainer">
+          <input
+            type="text"
+            placeholder="Enter Team Name / Filename (optional)"
+            id="team-name-input"
+          />
+          <input
+            type="text"
+            placeholder="'Prame' Suffix Alternative (optional)"
+            id="suffix-input"
+          />
+          <textarea
+            placeholder="Paste roster:&#10;&#10;Lebron James&#10;Michael Jordan&#10;    *Or*&#10;James, Lebron&#10;Jordan, Michael&#10;&#10;Output:&#10;&#10;> Roster.txt: alphabetized, no special characters, grouped by last initial.&#10;&#10;> Word List.txt: full names, last names -- alone, and with suffixed spoken form."
+            type="text"
+            rows="30"
+            cols="80"
+            id="rawRoster"
+          ></textarea>
+        </div>
         <input
           id="submitRoster"
           type="submit"
           value="Get Roster and Word List"
         />
-        <p id="rosterResult" style="white-space: pre-line"></p>
       </div>
     </div>
 
