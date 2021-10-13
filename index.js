@@ -2,6 +2,7 @@
 //const gameId = 401260281;
 //const rresult = await sdv.cbb.getPlayByPlay(gameId);
 //console.log(rresult);
+//my api key tt9oNaqdbwWc
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
