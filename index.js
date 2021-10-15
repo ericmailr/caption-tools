@@ -54,17 +54,19 @@ const getRoster = () => {
   inputArray.forEach((fullName) => {
     fullName = fullName.trim();
     fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    fullName = fullName.replace(/[^a-zA-Z '\-]/g, "");
+    //fullName = fullName.replace(/[^a-zA-Z '\-]/g, "");
     if (fullName != "") {
       let lastName = "";
+      console.log(lastName);
       if (fullName.includes(",")) {
         let names = fullName.split(", ");
-        lastName = names[1];
-        fullName = names[0] + " " + names[0];
+        lastName = names[0];
+        fullName = names[1] + " " + names[0];
       } else {
         let names = fullName.split(" ");
         lastName = names.at(-1);
       }
+      fullName = fullName.replace(/[^a-zA-Z '\-]/g, "");
       fullNamesArray.push(fullName);
 
       wordList += `${fullName}\n${fullName}\\${fullName} ${suffix}\n${lastName}\n${lastName}\\${lastName} ${suffix}\n`;

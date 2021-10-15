@@ -59,8 +59,10 @@ const getRoster = () => {
       let lastName = "";
       if (fullName.includes(",")) {
         let names = fullName.split(", ");
-        lastName = names[1];
-        fullName = names[0] + " " + names[0];
+        lastName = names[0];
+	      console.log(lastName);
+        fullName = names[1] + " " + names[0];
+	      console.log(fullName);
       } else {
         let names = fullName.split(" ");
         lastName = names.at(-1);
