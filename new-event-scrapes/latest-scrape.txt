@@ -1,3 +1,0 @@
-# save scrape to a file here
-# have a program run that checks for when the file has changes you're interested in
-# send email... text?

@@ -12,9 +12,9 @@
       <div id="schedule-container">
         <div class="inputFieldsContainer">
           <textarea
-            placeholder="Paste your schedule:&#10;&#10;Output:&#10;&#10;> work-schedule-[date].csv&#10;&emsp;&emsp;&emsp;&emsp; (for importing events to your google calendar)"
+            placeholder="Paste your intranet schedule:&#10;&#10;(for importing events to your google calendar)"
             type="text"
-            rows="30"
+            rows="24"
             cols="70"
             id="rawSchedule"
           ></textarea>
@@ -34,22 +34,45 @@
         </div>
       </div>
       <div id="roster-container">
-      <p style="color: black"> update: comma error fixed! sorry! it now works with "lastname, firstname" again.</p>
         <div class="inputFieldsContainer">
           <input
             type="text"
-            placeholder="Enter Team Name / Filename (optional)"
-            id="team-name-input"
+            placeholder="Enter Team Name / Filename"
+            id="roster-filename-input"
           />
           <input
             type="text"
-            placeholder="'Prame' Suffix Alternative (optional)"
+            placeholder="'Prame' Suffix Alternative"
             id="suffix-input"
           />
+          <div>
+            <textarea
+              type="text"
+              placeholder="Team name(/s)"
+              id="teamNameInput"
+            ></textarea>
+            <textarea
+              type="text"
+              placeholder="Venue"
+              id="venueInput"
+            ></textarea>
+          </div>
+          <div>
+            <textarea
+              type="text"
+              placeholder="Coaches"
+              id="coachesInput"
+            ></textarea>
+            <textarea
+              type="text"
+              placeholder="Commentators"
+              id="commentatorsInput"
+            ></textarea>
+          </div>
           <textarea
-            placeholder="Paste roster:&#10;&#10;Lebron James&#10;Michael Jordan&#10;    *Or*&#10;James, Lebron&#10;Jordan, Michael&#10;&#10;Output:&#10;&#10;> Roster.txt&#10;&emsp;&emsp;&emsp;&emsp;(alphabetized, no special characters, grouped by last initial)&#10;&#10;> Word List.txt&#10;&emsp;&emsp;&emsp;&emsp; (full names, last names -- alone, and with suffixed spoken form)&#10;&#10;&#10;&#10;&#10**Browser must permit multiple files to download at once**"
+            placeholder="Paste roster:&#10;&#10;LeBron James&#10;Michael Jordan&#10;    -or-&#10;James, LeBron&#10;Jordan, Michael&#10;&#10;Put a * before/after up to 10 names to add them to a tran slot.&#10;&#10;Output:&#10;&#10;> Roster.txt&#10;&emsp;&emsp;&emsp;&emsp;(alphabetized, no special characters, grouped by last initial)&#10;&#10;> Word List.txt&#10;&emsp;&emsp;&emsp;&emsp; (full names, last names, etc. alone + w/ suffixed spoken form)&#10;&#10;> Tran slots &#10;&emsp;&emsp;&emsp;&emsp;(listed below -- copy/paste to your sub list)"
             type="text"
-            rows="30"
+            rows="24"
             cols="70"
             id="rawRoster"
           ></textarea>
@@ -59,6 +82,7 @@
           type="submit"
           value="Get Roster and Word List"
         />
+        <p id="tranSlots"></p>
       </div>
     </div>
 

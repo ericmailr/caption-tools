@@ -90,7 +90,7 @@ a {
 input {
   height: 2em;
   font-size: 1.3em;
-  margin-bottom: 15px;
+  margin-bottom: 11px;
   border-radius: 0.5;
   outline: none;
   box-shadow: 5px 5px 16px -5px rgba(0, 0, 0, 0.8);
@@ -116,6 +116,22 @@ input[type="submit"] {
 .inputFieldsContainer {
   display: flex;
   flex-direction: column;
+}
+
+.inputFieldsContainer > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputFieldsContainer > div > * {
+  width: 46%;
+  height: 2.2em;
+  margin-bottom: 11px;
+}
+
+#tranSlots {
+  color: black;
+  white-space: pre-line;
 }
 
 @media screen and (max-width:1000px) {
