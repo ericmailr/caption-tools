@@ -134,6 +134,17 @@ input[type="submit"] {
   white-space: pre-line;
 }
 
+#teamTypeContainer {
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+#teamTypeContainer > * {
+  margin: 10px;
+  box-shadow: none;
+}
+
 @media screen and (max-width:1000px) {
   #container {
     display: flex;

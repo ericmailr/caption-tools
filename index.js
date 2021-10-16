@@ -189,9 +189,14 @@ const getRoster = () => {
     }
   }
 
-  let alphabeticalTranSlotNames = tranSlotNames.sort(compare).slice(0, 10);
+  let alphabeticalTranSlotNames = tranSlotNames.sort(compare).slice(0, 5);
+  let teamType = document.querySelector("input[name=teamType]:checked").value;
+  console.log(teamType);
+  let firstIndex = teamType === "Home" ? 10 : 20;
   alphabeticalTranSlotNames.forEach((name, index) => {
-    tranSlots[2 * index + 10] = `tran${2 * index + 11}|${name}`;
+    tranSlots[2 * index + firstIndex] = `tran${
+      2 * index + (firstIndex + 1)
+    }|${name}`;
   });
 
   let tranSlotsString = "";

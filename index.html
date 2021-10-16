@@ -70,7 +70,7 @@
             ></textarea>
           </div>
           <textarea
-            placeholder="Paste roster:&#10;&#10;LeBron James&#10;Michael Jordan&#10;    -or-&#10;James, LeBron&#10;Jordan, Michael&#10;&#10;Put a * before/after up to 10 names to add them to a tran slot.&#10;&#10;Output:&#10;&#10;> Roster.txt&#10;&emsp;&emsp;&emsp;&emsp;(alphabetized, no special characters, grouped by last initial)&#10;&#10;> Word List.txt&#10;&emsp;&emsp;&emsp;&emsp; (full names, last names, etc. alone + w/ suffixed spoken form)&#10;&#10;> Tran slots &#10;&emsp;&emsp;&emsp;&emsp;(listed below -- copy/paste to your sub list)"
+            placeholder="Paste roster:&#10;&#10;LeBron James&#10;Michael Jordan&#10;    -or-&#10;James, LeBron&#10;Jordan, Michael&#10;&#10;Put a * before/after up to 5 names to add them to a tran slot.&#10;&#10;Output:&#10;&#10;> Roster.txt&#10;&emsp;&emsp;&emsp;&emsp;(alphabetized, no special characters, grouped by last initial)&#10;&#10;> Word List.txt&#10;&emsp;&emsp;&emsp;&emsp; (full names, last names, etc. alone + w/ suffixed spoken form)&#10;&#10;> Tran slots &#10;&emsp;&emsp;&emsp;&emsp;(listed below -- copy/paste to your sub list)"
             type="text"
             rows="24"
             cols="70"
@@ -82,6 +82,18 @@
           type="submit"
           value="Get Roster and Word List"
         />
+        <div id="teamTypeContainer">
+          <input
+            type="radio"
+            id="homeTeamRadio"
+            name="teamType"
+            value="Home"
+            checked
+          />
+          <label for="homeTeamRadio">Home</label>
+          <input type="radio" id="awayTeamRadio" name="teamType" value="Away" />
+          <label for="awayTeamRadio">Away</label>
+        </div>
         <p id="tranSlots"></p>
       </div>
     </div>
