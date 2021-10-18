@@ -11,11 +11,12 @@
     <div id="container">
       <div id="schedule-container">
         <div class="inputFieldsContainer">
+          <label for="rawSchedule" class="labels">Intranet Schedule</label>
           <textarea
-            placeholder="Paste your intranet schedule:&#10;&#10;(for importing events to your google calendar)"
+            placeholder="&#10;(for importing events to your google calendar)"
             type="text"
-            rows="24"
-            cols="70"
+            rows="18"
+            cols="85"
             id="rawSchedule"
           ></textarea>
         </div>
@@ -35,65 +36,84 @@
       </div>
       <div id="roster-container">
         <div class="inputFieldsContainer">
-          <input
-            type="text"
-            placeholder="Enter Team Name / Filename"
-            id="roster-filename-input"
-          />
-          <input
-            type="text"
-            placeholder="'Prame' Suffix Alternative"
-            id="suffix-input"
-          />
           <div>
-            <textarea
-              type="text"
-              placeholder="Team name(/s)"
-              id="teamNameInput"
-            ></textarea>
-            <textarea
-              type="text"
-              placeholder="Venue"
-              id="venueInput"
-            ></textarea>
+            <div class="half-width-textarea-container">
+              <label for="roster-filename-input" class="labels">Filename</label>
+              <input type="text" id="roster-filename-input" />
+            </div>
+            <div class="half-width-textarea-container">
+              <label for="suffix-input" class="labels">Suffix</label>
+              <input type="text" id="suffix-input" value="prame" />
+            </div>
           </div>
           <div>
-            <textarea
-              type="text"
-              placeholder="Coaches"
-              id="coachesInput"
-            ></textarea>
-            <textarea
-              type="text"
-              placeholder="Commentators"
-              id="commentatorsInput"
-            ></textarea>
+            <div class="half-width-textarea-container">
+              <label for="teamNameInput" class="labels">Team Names</label>
+              <textarea
+                type="text"
+                id="teamNameInput"
+                placeholder="(First two are tran slotted)"
+              ></textarea>
+            </div>
+            <div class="half-width-textarea-container">
+              <label for="venueInput" class="labels">Venue</label>
+              <textarea type="text" id="venueInput"></textarea>
+            </div>
           </div>
+          <div>
+            <div class="half-width-textarea-container">
+              <label for="coachesInput" class="labels">Coaches</label>
+              <textarea
+                type="text"
+                id="coachesInput"
+                placeholder="(First two are tran slotted)"
+              ></textarea>
+            </div>
+            <div class="half-width-textarea-container">
+              <label for="commentatorsInput" class="labels">Commentators</label>
+              <textarea type="text" id="commentatorsInput"></textarea>
+            </div>
+          </div>
+          <div id="teamTypeContainer">
+            <input
+              type="radio"
+              id="BothRadio"
+              name="teamType"
+              value="Both"
+              checked
+            />
+            <label for="BothRadio">Both</label>
+            <input
+              type="radio"
+              id="homeTeamRadio"
+              name="teamType"
+              value="Home"
+            />
+            <label for="homeTeamRadio">Home</label>
+            <input
+              type="radio"
+              id="awayTeamRadio"
+              name="teamType"
+              value="Away"
+            />
+            <label for="awayTeamRadio">Away</label>
+          </div>
+          <label for="rawRoster" class="labels">Roster</label>
           <textarea
-            placeholder="Paste roster:&#10;&#10;LeBron James&#10;Michael Jordan&#10;    -or-&#10;James, LeBron&#10;Jordan, Michael&#10;&#10;Put a * before/after up to 5 names to add them to a tran slot.&#10;&#10;Output:&#10;&#10;> Roster.txt&#10;&emsp;&emsp;&emsp;&emsp;(alphabetized, no special characters, grouped by last initial)&#10;&#10;> Word List.txt&#10;&emsp;&emsp;&emsp;&emsp; (full names, last names, etc. alone + w/ suffixed spoken form)&#10;&#10;> Tran slots &#10;&emsp;&emsp;&emsp;&emsp;(listed below -- copy/paste to your sub list)"
+            placeholder="LeBron James&#10;*Michael Jordan&#10;Buckets, Jimmy*&#10;Luka Dončić77&#10;Curry,Stephen&#10;Giannis Antetokounmpo`&#10;&#10;* or `(backtick): add to tran slot (up to 10, or 5 per team)&#10;&#10;&#10;&#10;Output:&#10;&#10;> Roster.txt - alphabetized, grouped by last name &#10;&#10;> Word List.txt - fullnames, lastnames, alone & w/ suffixed spoken form&#10;&#10;> Tran slots - listed below (copy/paste to your sub list)"
             type="text"
-            rows="24"
-            cols="70"
+            rows="18"
+            cols="85"
             id="rawRoster"
           ></textarea>
         </div>
+
         <input
           id="submitRoster"
           type="submit"
           value="Get Roster and Word List"
         />
-        <div id="teamTypeContainer">
-          <input
-            type="radio"
-            id="homeTeamRadio"
-            name="teamType"
-            value="Home"
-            checked
-          />
-          <label for="homeTeamRadio">Home</label>
-          <input type="radio" id="awayTeamRadio" name="teamType" value="Away" />
-          <label for="awayTeamRadio">Away</label>
-        </div>
+
         <p id="tranSlots"></p>
       </div>
     </div>

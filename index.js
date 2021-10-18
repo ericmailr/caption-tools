@@ -1,5 +1,6 @@
 // TODO
 // add option to not sort alphabetically
+// sort and group the word list too. easier to find and edit.
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
@@ -77,9 +78,9 @@ const getRoster = () => {
         let names = fullName.split(" ");
         lastName = names.at(-1);
       }
-      fullName = fullName.replace(/[^a-zA-Z '\-\.\*]/g, "");
-      if (fullName.includes("*")) {
-        fullName = fullName.replace(/\*/g, "");
+      fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*]/g, "");
+      if (fullName.includes("*") || fullName.includes("`")) {
+        fullName = fullName.replace(/`|\*/g, "");
         tranSlotNames.push(fullName);
       }
     }
@@ -111,15 +112,18 @@ const getRoster = () => {
       let subArray = [];
       let inputArray = input.split("\n");
       inputArray.forEach((vocabEntry) => {
-        vocabEntry = vocabEntry.trim();
-        subArray.push(vocabEntry);
-        roster += isCoach
-          ? "Coach " + vocabEntry + "\n"
-          : processName(vocabEntry)[0] + "\n";
-        if (isFullName) {
-          addEntryToWordList(vocabEntry, isCoach);
-        } else {
-          wordList += vocabEntry + "\n";
+        //get rid of leading/trailing white space, and empty lines
+        vocabEntry = vocabEntry.trim().replace(/^\s*\n/gm, "");
+        if (vocabEntry !== "") {
+          subArray.push(vocabEntry);
+          roster += isCoach
+            ? "Coach " + vocabEntry + "\n"
+            : processName(vocabEntry)[0] + "\n";
+          if (isFullName) {
+            addEntryToWordList(vocabEntry, isCoach);
+          } else {
+            wordList += vocabEntry + "\n";
+          }
         }
       });
       return subArray;
@@ -167,6 +171,8 @@ const getRoster = () => {
       ? `tran07|${commentatorNames[1]}`
       : "tran07|";
   tranSlots[31] = coachNames ? `tran32|${coachNames[0]}` : "tran32|";
+  tranSlots[33] =
+    coachNames && coachNames[1] ? `tran34|${coachNames[1]}` : "tran32|";
   let spee01FirstName = "";
   let spee02FirstName = "";
   let spee03FirstName = "";
@@ -189,10 +195,14 @@ const getRoster = () => {
     }
   }
 
-  let alphabeticalTranSlotNames = tranSlotNames.sort(compare).slice(0, 5);
   let teamType = document.querySelector("input[name=teamType]:checked").value;
-  console.log(teamType);
-  let firstIndex = teamType === "Home" ? 10 : 20;
+  slotNumber = teamType === "Both" ? 10 : 5;
+
+  let alphabeticalTranSlotNames = tranSlotNames
+    .sort(compare)
+    .slice(0, slotNumber);
+
+  let firstIndex = teamType === "Home" || teamType === "Both" ? 10 : 20;
   alphabeticalTranSlotNames.forEach((name, index) => {
     tranSlots[2 * index + firstIndex] = `tran${
       2 * index + (firstIndex + 1)
