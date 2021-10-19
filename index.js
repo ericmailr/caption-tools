@@ -1,23 +1,38 @@
 // TODO
 // add option to not sort alphabetically
-// sort and group the word list too. easier to find and edit.
+// handle jr, III, II
+// should probably auto cap first letters
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
-const submitRosterButton = document.getElementById("submitRoster");
-const rawRosterInput = document.getElementById("rawRoster");
 const scheduleContainerDiv = document.getElementById("scheduleContainer");
-const filenameInput = document.getElementById("roster-filename-input");
+
+const submitRosterButton = document.getElementById("submitRoster");
+const submitRoster1Button = document.getElementById("submitRoster1");
+const submitRoster2Button = document.getElementById("submitRoster2");
+
+const rawRoster1Input = document.getElementById("rawRoster1");
+const rawRoster2Input = document.getElementById("rawRoster2");
+
+const team1NamesInput = document.getElementById("team1NameInput");
+const team2NamesInput = document.getElementById("team2NameInput");
+
 const suffixInput = document.getElementById("suffix-input");
-const suffix = suffixInput.value === "" ? "prame" : suffixInput.value;
+let suffix = "prame";
 const tranSlotsP = document.getElementById("tranSlots");
 
-const teamNameInput = document.getElementById("teamNameInput");
-const venueInput = document.getElementById("venueInput");
-const coachesInput = document.getElementById("coachesInput");
+const venueInput = document.getElementById("venue-input");
+const coaches1Input = document.getElementById("coaches1Input");
+const coaches2Input = document.getElementById("coaches2Input");
 const commentatorsInput = document.getElementById("commentatorsInput");
+const officiatorsInput = document.getElementById("officiatorsInput");
+
+const filename1Input = document.getElementById("filename1Input");
+const filename2Input = document.getElementById("filename2Input");
 
 const prepTime = 15;
+let tranSlotNames = [];
+let tranSlots;
 
 const getScheduleFileSuffix = () => {
   var today = new Date();
@@ -26,14 +41,12 @@ const getScheduleFileSuffix = () => {
   var yyyy = today.getFullYear();
   var hh = today.getHours();
   var m = today.getMinutes();
-
   return `${mm}${dd}${yyyy}${hh}${m}`;
 };
 
 const compareStrings = (a, b) => {
   if (a < b) return -1;
   if (a > b) return 1;
-
   return 0;
 };
 
@@ -42,13 +55,12 @@ const compare = (a, b) => {
   const splitB = b.split(" ");
   const lastA = splitA[splitA.length - 1];
   const lastB = splitB[splitB.length - 1];
-
   return lastA === lastB
     ? compareStrings(splitA[0], splitB[0])
     : compareStrings(lastA, lastB);
 };
 
-const getTranSlots = () => {
+const initTranSlots = () => {
   let tranArray = [];
   for (let i = 0; i < 35; i++) {
     if (i < 9) {
@@ -60,182 +72,321 @@ const getTranSlots = () => {
   return tranArray;
 };
 
-const getRoster = () => {
-  let wordList = "";
-  let roster = "";
-  let tranSlotNames = [];
-  // remove white space, special characters. Return barebones fullname and lastname, only - and . allowed.
-  const processName = (fullName) => {
-    let lastName = "";
-    fullName = fullName.trim();
-    fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    if (fullName != "") {
-      if (fullName.includes(",")) {
-        let names = fullName.split(",");
-        lastName = names[0].trim();
-        fullName = names[1].trim() + " " + names[0];
-      } else {
-        let names = fullName.split(" ");
-        lastName = names.at(-1);
+const getProcessedGroupArray = (input) => {
+  let subArray = [];
+  if (input !== "") {
+    let inputArray = input.split("\n");
+    inputArray.forEach((vocabEntry) => {
+      //get rid of leading/trailing white space, and empty lines
+      vocabEntry = vocabEntry.trim().replace(/^\s*\n/gm, "");
+      if (vocabEntry !== "") {
+        subArray.push(vocabEntry);
       }
-      fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*]/g, "");
-      if (fullName.includes("*") || fullName.includes("`")) {
-        fullName = fullName.replace(/`|\*/g, "");
-        tranSlotNames.push(fullName);
-      }
-    }
-    return [fullName, lastName];
-  };
-
-  const addEntryToWordList = (entry, isCoach = false) => {
-    let [fullName, lastName] = processName(entry);
-    wordList += `${fullName}\n${fullName}\\${fullName
-      .replace(/\./g, "")
-      .replace(/-/g, " ")} ${suffix}\n`;
-    if (fullName !== lastName) {
-      wordList += `${lastName}\n${lastName}\\${lastName
-        .replace(/\./g, "")
-        .replace(/-/g, " ")} ${suffix}\n`;
-      if (isCoach) {
-        wordList += "Coach " + fullName + "\n";
-        wordList += "Coach " + lastName + "\n";
-      }
-    } else {
-      if (isCoach) {
-        wordList += "Coach " + lastName + "\n";
-      }
-    }
-  };
-
-  const addInput = (input, isFullName = true, isCoach = false) => {
-    if (input !== "") {
-      let subArray = [];
-      let inputArray = input.split("\n");
-      inputArray.forEach((vocabEntry) => {
-        //get rid of leading/trailing white space, and empty lines
-        vocabEntry = vocabEntry.trim().replace(/^\s*\n/gm, "");
-        if (vocabEntry !== "") {
-          subArray.push(vocabEntry);
-          roster += isCoach
-            ? "Coach " + vocabEntry + "\n"
-            : processName(vocabEntry)[0] + "\n";
-          if (isFullName) {
-            addEntryToWordList(vocabEntry, isCoach);
-          } else {
-            wordList += vocabEntry + "\n";
-          }
-        }
-      });
-      return subArray;
-    }
-  };
-
-  let teamNames = addInput(teamNameInput.value, false);
-  let venueNames = addInput(venueInput.value, false);
-  roster += "\n";
-
-  let rawRoster = rawRosterInput.value;
-  let inputArray = rawRoster.split("\n");
-  let rosterArray = [];
-  inputArray.forEach((fullName) => {
-    if (fullName !== "") {
-      [fullName, lastName] = processName(fullName);
-      addEntryToWordList(fullName);
-      rosterArray.push(fullName);
-    }
-  });
-  let alphabeticalRoster = rosterArray.sort(compare);
-  let prevLastNameFirstLetter = "a";
-  alphabeticalRoster.forEach((fullName) => {
-    let names = fullName.split(" ");
-    lastName = names.at(-1);
-    if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
-      prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
-      roster += "\n";
-    }
-    roster += fullName + "\n";
-  });
-  roster += "\n";
-  let coachNames = addInput(coachesInput.value, true, true);
-  let commentatorNames = addInput(commentatorsInput.value);
-
-  console.log("roster: \n" + roster);
-  console.log("wordList: \n" + wordList);
-
-  let tranSlots = getTranSlots();
-  tranSlots[2] = teamNames ? `tran03|${teamNames[0]}` : "tran03|";
-  tranSlots[4] = venueNames ? `tran05|${venueNames[0]}` : "tran05|";
-  tranSlots[5] = commentatorNames ? `tran06|${commentatorNames[0]}` : "tran06|";
-  tranSlots[6] =
-    commentatorNames && commentatorNames[1]
-      ? `tran07|${commentatorNames[1]}`
-      : "tran07|";
-  tranSlots[31] = coachNames ? `tran32|${coachNames[0]}` : "tran32|";
-  tranSlots[33] =
-    coachNames && coachNames[1] ? `tran34|${coachNames[1]}` : "tran32|";
-  let spee01FirstName = "";
-  let spee02FirstName = "";
-  let spee03FirstName = "";
-  if (commentatorNames) {
-    spee01FirstName = commentatorNames[0].split(" ")[0].trim();
-    spee01FirstName =
-      spee01FirstName.charAt(0).toUpperCase() + spee01FirstName.slice(1);
-    tranSlots.push(`spee01|>> ${spee01FirstName}:`);
-    if (commentatorNames[1]) {
-      spee02FirstName = commentatorNames[1].split(" ")[0].trim();
-      spee02FirstName =
-        spee02FirstName.charAt(0).toUpperCase() + spee02FirstName.slice(1);
-      tranSlots.push(`spee02|>> ${spee02FirstName}:`);
-    }
-    if (commentatorNames[2]) {
-      spee03FirstName = commentatorNames[2].split(" ")[0].trim();
-      spee03FirstName =
-        spee03FirstName.charAt(0).toUpperCase() + spee03FirstName.slice(1);
-      tranSlots.push(`spee03|>> ${spee03FirstName}:`);
-    }
+    });
   }
+  return subArray;
+};
 
-  let teamType = document.querySelector("input[name=teamType]:checked").value;
-  slotNumber = teamType === "Both" ? 10 : 5;
+const getTranSlots = () => {
+  tranSlots = initTranSlots();
+  let commentatorNames = getProcessedGroupArray(commentatorsInput.value);
+  tranSlots[5] =
+    commentatorNames.length > 0 ? `tran06|${commentatorNames[0]}` : "tran06|";
+  tranSlots[6] =
+    commentatorNames.length > 1 ? `tran07|${commentatorNames[1]}` : "tran07|";
+  tranSlots[7] =
+    commentatorNames.length > 2 ? `tran07|${commentatorNames[2]}` : "tran08|";
+  let alphabeticalTranSlotNames = tranSlotNames.sort(compare).slice(0, 10);
 
-  let alphabeticalTranSlotNames = tranSlotNames
-    .sort(compare)
-    .slice(0, slotNumber);
-
-  let firstIndex = teamType === "Home" || teamType === "Both" ? 10 : 20;
+  let firstIndex = 10;
   alphabeticalTranSlotNames.forEach((name, index) => {
     tranSlots[2 * index + firstIndex] = `tran${
       2 * index + (firstIndex + 1)
     }|${name}`;
   });
 
+  commentatorNames.forEach((name, i) => {
+    let tempName = name.split(" ")[0].trim();
+    tempName = tempName.charAt(0).toUpperCase() + tempName.slice(1);
+    tranSlots.push(`spee0${i + 1}|>> ${tempName}:`);
+  });
+
+  let team1Names = getProcessedGroupArray(team1NamesInput.value);
+  let team2Names = getProcessedGroupArray(team2NamesInput.value);
+
+  tranSlots[0] = team1Names.length > 0 ? `tran01|${team1Names[0]}` : "tran01|";
+  tranSlots[1] = team2Names.length > 0 ? `tran02|${team2Names[0]}` : "tran02|";
+  tranSlots[2] = team1Names.length > 1 ? `tran03|${team1Names[1]}` : `tran03|`;
+  tranSlots[3] = team2Names.length > 1 ? `tran04|${team2Names[1]}` : `tran04|`;
+  tranSlots[4] = venueInput.value
+    ? `tran05|${getProcessedGroupArray(venueInput.value)[0]}`
+    : "tran05|";
+
+  let coaches1 = getProcessedGroupArray(coaches1Input.value);
+  let coaches2 = getProcessedGroupArray(coaches2Input.value);
+  tranSlots[31] = coaches1.length > 0 ? `tran32|${coaches1[0]}` : "tran32|";
+  tranSlots[33] = coaches2.length > 0 ? `tran34|${coaches2[0]}` : "tran34|";
+
+  return tranSlots;
+};
+
+tranSlots = initTranSlots();
+
+const printTranSlots = (tranSlots) => {
   let tranSlotsString = "";
   tranSlots.forEach((slot) => {
     tranSlotsString += `${slot}\n`;
   });
-  console.log(tranSlotsString);
   tranSlotsP.innerHTML = tranSlotsString;
-
-  window.URL = window.webkitURL || window.URL;
-  var contentType = "text/plain";
-  var rosterFile = new Blob([roster], { type: contentType });
-  var wordListFile = new Blob([wordList], { type: contentType });
-  var a1 = document.createElement("a");
-  var a2 = document.createElement("a");
-  let filename = filenameInput.value;
-  a1.download = `${filename} roster.txt`;
-  a2.download = `${filename} word list.txt`;
-  a1.href = window.URL.createObjectURL(rosterFile);
-  a2.href = window.URL.createObjectURL(wordListFile);
-  a1.dataset.downloadurl = [contentType, a1.download, a1.href].join(":");
-  a2.dataset.downloadurl = [contentType, a2.download, a2.href].join(":");
-  document.body.appendChild(a1);
-  document.body.appendChild(a2);
-  a1.click();
-  a2.click();
+  return tranSlotsString;
 };
 
-submitRosterButton.addEventListener("click", getRoster);
+// remove white space, special characters. Return barebones fullname and lastname, only - and . allowed.
+const getNameAsArray = (fullName) => {
+  let lastName = "";
+  fullName = fullName.trim();
+  fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  if (fullName != "") {
+    if (fullName.includes(",")) {
+      let names = fullName.split(",");
+      lastName = names[0].trim();
+      fullName = names[1].trim() + " " + names[0];
+    } else {
+      let names = fullName.split(" ");
+      lastName = names.at(-1);
+    }
+    fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*]/g, "");
+    if (fullName.includes("*") || fullName.includes("`")) {
+      fullName = fullName.replace(/`|\*/g, "");
+      tranSlotNames.push(fullName);
+    }
+  }
+  return [fullName, lastName];
+};
+
+const getVocabEntries = (entry, isCoach = false, isName = true) => {
+  let entries = "";
+  if (!entry || entry === "") {
+    return "";
+  }
+  entry = entry.trim().replace(/^\s*\n/gm, "");
+  if (isName) {
+    let [fullName, lastName] = getNameAsArray(entry);
+    entries = "";
+    entries += `${fullName}\n${fullName}\\${fullName
+      .replace(/\./g, "")
+      .replace(/-/g, " ")} ${suffix}\n`;
+    if (fullName !== lastName) {
+      entries += `${lastName}\n${lastName}\\${lastName
+        .replace(/\./g, "")
+        .replace(/-/g, " ")} ${suffix}\n`;
+      if (isCoach) {
+        entries += "Coach " + fullName + "\n";
+        entries += "Coach " + lastName + "\n";
+      }
+    } else {
+      if (isCoach) {
+        entries += "Coach " + lastName + "\n";
+      }
+    }
+  } else {
+    entries = "";
+    entries += entry + "\n";
+    entries += `${entry}\\${entry}`;
+  }
+  return entries;
+};
+
+const processRawArray = (rawArray) => {
+  let rosterArray = [];
+  rawArray.forEach((fullName) => {
+    if (fullName !== "") {
+      [fullName, lastName] = getNameAsArray(fullName);
+      rosterArray.push(fullName);
+    }
+  });
+  let alphabeticalRosterArray = rosterArray.sort(compare);
+  let prevLastNameFirstLetter = "a";
+  alphabeticalRosterArray.forEach((fullName, i) => {
+    let names = fullName.split(" ");
+    lastName = names.at(-1);
+    if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+      prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
+      alphabeticalRosterArray[i] = "\n" + alphabeticalRosterArray[i];
+    }
+  });
+  return alphabeticalRosterArray;
+};
+
+const getRoster = (
+  teamNamesInput,
+  rawRosterInput,
+  coachesInput,
+  tranSlotNames = []
+) => {
+  suffix = suffixInput.value === "" ? "prame" : suffixInput.value;
+  let teamNamesArray = getProcessedGroupArray(teamNamesInput.value);
+  let rosterArray = processRawArray(rawRosterInput.value.split("\n"));
+  let coaches = getProcessedGroupArray(coachesInput.value);
+  let venueName = getProcessedGroupArray(venueInput.value)[0];
+  venueName = venueName === undefined ? "" : venueName;
+  let commentators = getProcessedGroupArray(commentatorsInput.value);
+  let officiators = getProcessedGroupArray(officiatorsInput.value);
+  let roster = "";
+  let wordList = "";
+
+  teamNamesArray.forEach((teamName) => {
+    roster += teamName + "\n";
+    wordList += getVocabEntries(teamName, false, false);
+  });
+  wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
+  roster += venueName + "\n";
+
+  rosterArray.forEach((playerName) => {
+    wordList += getVocabEntries(playerName);
+    roster += playerName + "\n";
+  });
+  let playersOnlyWordList = wordList;
+
+  wordList += "\n";
+  roster += "\nCoaches:\n";
+  coaches.forEach((coachName) => {
+    wordList += getVocabEntries(coachName, true);
+    roster += coachName + "\n";
+  });
+
+  wordList.replace("\n\n\n", "\n");
+  wordList += "\n";
+  roster += "\nCommentators:\n";
+  commentators.forEach((commentatorName) => {
+    wordList += getVocabEntries(commentatorName);
+    roster += commentatorName + "\n";
+  });
+  wordList += "\n";
+  roster += "\nOfficials:\n";
+  officiators.forEach((officiatorName) => {
+    wordList += getVocabEntries(officiatorName);
+    roster += officiatorName + "\n";
+  });
+
+  tranSlots = getTranSlots();
+  return [roster, wordList, tranSlots, playersOnlyWordList];
+};
+
+const getBigRoster = () => {
+  tranSlotNames = [];
+  let [r1, w1, t1, playersOnlyWordList] = getRoster(
+    team1NamesInput,
+    rawRoster1Input,
+    coaches1Input
+  );
+  let tranSlotNames1 = tranSlotNames;
+  let [r2, w2, t2] = getRoster(
+    team2NamesInput,
+    rawRoster2Input,
+    coaches2Input,
+    tranSlotNames1
+  );
+
+  let teamNamesArray = getProcessedGroupArray(team1NamesInput.value)
+    .concat(getProcessedGroupArray(team2NamesInput.value))
+    .sort(compare);
+  let rosterArray = processRawArray(rawRoster1Input.value.split("\n"))
+    .concat(processRawArray(rawRoster2Input.value.split("\n")))
+    .sort(compare);
+  let coaches = getProcessedGroupArray(coaches1Input.value).concat(
+    getProcessedGroupArray(coaches2Input.value)
+  );
+  let officials = getProcessedGroupArray(officiatorsInput.value);
+
+  let prevLastNameFirstLetter = "a";
+  rosterArray.forEach((fullName, i) => {
+    fullName = fullName.replace("\n", "");
+    let names = fullName.split(" ");
+    lastName = names.at(-1);
+    if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+      prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
+      rosterArray[i] = "\n" + fullName.trim();
+    }
+  });
+
+  roster = "";
+  teamNamesArray.forEach((name) => {
+    if (name.trim() !== "") {
+      roster += name + "\n";
+    }
+  });
+  roster += "\n";
+  rosterArray.forEach((name) => {
+    name = name.replace("\n", "");
+    if (name.trim() !== "") {
+      roster += name + "\n";
+    }
+  });
+  roster += "\nCoaches:\n";
+  coaches.forEach((name) => {
+    if (name.trim() !== "") {
+      roster += name + "\n";
+    }
+  });
+  roster += "\nOfficials:\n";
+  officials.forEach((name) => {
+    if (name.trim() !== "") {
+      roster += name + "\n";
+    }
+  });
+  downloadFiles(roster, playersOnlyWordList + "\n" + w2, t2);
+};
+
+const downloadFiles = (roster, wordList, tranSlots) => {
+  window.URL = window.webkitURL || window.URL;
+  let contentType = "text/plain";
+
+  let rosterFile = new Blob([roster], { type: contentType });
+  let wordListFile = new Blob([wordList], { type: contentType });
+  let subListFile = new Blob([printTranSlots(tranSlots)], {
+    type: contentType,
+  });
+  let rosterLink = document.createElement("a");
+  let wordListLink = document.createElement("a");
+  let subListLink = document.createElement("a");
+  let filename1 = filename1Input.value;
+  let filename2 = filename2Input.value;
+  if (filename2 === "") {
+    rosterLink.download = `${filename1} roster.txt`;
+    wordListLink.download = `${filename1} word list.txt`;
+  } else {
+    rosterLink.download = `${filename1}/${filename2} roster.txt`;
+    wordListLink.download = `${filename1}/${filename2} word list.txt`;
+  }
+  subListLink.download = `${filename1} sub list ${getScheduleFileSuffix()}.txt`;
+  rosterLink.href = window.URL.createObjectURL(rosterFile);
+  wordListLink.href = window.URL.createObjectURL(wordListFile);
+  subListLink.href = window.URL.createObjectURL(subListFile);
+  rosterLink.dataset.downloadurl = [
+    contentType,
+    rosterLink.download,
+    rosterLink.href,
+  ].join(":");
+  wordListLink.dataset.downloadurl = [
+    contentType,
+    wordListLink.download,
+    wordListLink.href,
+  ].join(":");
+  subListLink.dataset.downloadurl = [
+    contentType,
+    subListLink.download,
+    subListLink.href,
+  ].join(":");
+  document.body.appendChild(rosterLink);
+  document.body.appendChild(wordListLink);
+  console.log("roster:\n" + roster);
+  console.log("wordList:\n" + wordList);
+  console.log("subList:\n" + printTranSlots(tranSlots));
+  rosterLink.click();
+  wordListLink.click();
+  subListLink.click();
+};
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -357,3 +508,23 @@ const getCSV = () => {
 };
 
 submitScheduleButton.addEventListener("click", getCSV);
+
+submitRosterButton.addEventListener("click", getBigRoster);
+submitRoster1Button.addEventListener("click", () => {
+  //added last
+  tranSlotNames = [];
+  let [r, w, t] = getRoster(
+    team1NamesInput,
+    rawRoster1Input,
+    coaches1Input,
+    tranSlots
+  );
+  downloadFiles(r, w, t);
+});
+
+submitRoster2Button.addEventListener("click", () => {
+  //added last
+  tranSlotNames = [];
+  let [r, w, t] = getRoster(team2NamesInput, rawRoster2Input, coaches2Input);
+  downloadFiles(r, w, t);
+});

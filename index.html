@@ -9,11 +9,115 @@
   </head>
   <body>
     <div id="container">
+      <div id="roster-container">
+        <div class="inputFieldsContainer">
+          <div>
+            <div class="half-width-textarea-container">
+              <label for="team1NameInput" class="labels">Team 1 Name(/s)</label>
+              <textarea type="text" id="team1NameInput"></textarea>
+            </div>
+            <div class="half-width-textarea-container">
+              <label for="team2NameInput" class="labels">Team 2 Name(/s)</label>
+              <textarea type="text" id="team2NameInput"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="half-width-textarea-container">
+              <label for="coaches1Input" class="labels">Coaches</label>
+              <textarea type="text" id="coaches1Input"></textarea>
+            </div>
+            <div class="half-width-textarea-container">
+              <label for="coaches2Input" class="labels">Coaches</label>
+              <textarea type="text" id="coaches2Input"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="roster-textarea-container">
+              <label for="rawRoster1" class="labels">Roster 1</label>
+              <div>
+                <textarea
+                  placeholder="LeBron James&#10;*Michael Jordan&#10;Buckets, Jimmy*&#10;Luka Dončić77&#10;Curry,Stephen&#10;Giannis Antetokounmpo`&#10;&#10;* or `: add to tran slot (up to 10 between both teams)&#10;&#10;Output:&#10;&#10;> Roster.txt - alphabetized, grouped by last name &#10;&#10;> Word List.txt - fullnames, lastnames, alone & w/ suffixed spoken form&#10;&#10;> Sub List - (tran slots)"
+                  type="text"
+                  rows="16"
+                  cols="40"
+                  id="rawRoster1"
+                ></textarea>
+              </div>
+            </div>
+            <div class="roster-textarea-container">
+              <label for="rawRoster2" class="labels">Roster 2</label>
+              <div>
+                <textarea
+                  placeholder="LeBron James&#10;*Michael Jordan&#10;Buckets, Jimmy*&#10;Luka Dončić77&#10;Curry,Stephen&#10;Giannis Antetokounmpo`&#10;&#10;* or `: add to tran slot (up to 10 between both teams)&#10;&#10;Output:&#10;&#10;> Roster.txt - alphabetized, grouped by last name &#10;&#10;> Word List.txt - fullnames, lastnames, alone & w/ suffixed spoken form&#10;&#10;> Sub List - (tran slots)"
+                  type="text"
+                  rows="16"
+                  cols="40"
+                  id="rawRoster2"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div id="team-shared-container">
+            <div>
+              <div class="half-width-textarea-container">
+                <label for="venue-input" class="labels">Venue</label>
+                <input type="text" id="venue-input" />
+              </div>
+              <div class="half-width-textarea-container">
+                <label for="suffix-input" class="labels">Suffix</label>
+                <input type="text" id="suffix-input" value="prame" />
+              </div>
+            </div>
+            <div>
+              <div class="half-width-textarea-container">
+                <label for="officiatorsInput" class="labels"
+                  >Officiating Crew</label
+                >
+                <textarea type="text" id="officiatorsInput"></textarea>
+              </div>
+              <div class="half-width-textarea-container">
+                <label for="commentatorsInput" class="labels"
+                  >Commentators</label
+                >
+                <textarea type="text" id="commentatorsInput"></textarea>
+              </div>
+            </div>
+            <div class="filenames">
+              <div class="separator"></div>
+              <div class="half-width-textarea-container">
+                <label for="filename1Input" class="labels">Filename1</label>
+                <input type="text" id="filename1Input"></textarea>
+              </div>
+              <div class="separator"></div>
+              <div class="half-width-textarea-container">
+                <label for="filename2Input" class="labels">Filename2</label>
+                <input type="text" id="filename2Input"></textarea>
+              </div>
+              <div class="separator"></div>
+              </div>
+          </div>
+        </div>
+        <div id="separate-submit-container">
+          <div class="half-width-textarea-container">
+            <input id="submitRoster1" type="submit" value="Get just Team 1" />
+          </div>
+          <div class="half-width-textarea-container">
+            <input id="submitRoster2" type="submit" value="Get just Team 2" />
+          </div>
+        </div>
+        <input
+          id="submitRoster"
+          type="submit"
+          value="Get Match Roster, Word List, Sub List"
+        />
+
+        <p id="tranSlots"></p>
+      </div>
       <div id="schedule-container">
         <div class="inputFieldsContainer">
           <label for="rawSchedule" class="labels">Intranet Schedule</label>
           <textarea
-            placeholder="&#10;(for importing events to your google calendar)"
+            placeholder="(for importing events to your google calendar)"
             type="text"
             rows="18"
             cols="85"
@@ -33,88 +137,6 @@
             >Google Calendar import page</a
           >
         </div>
-      </div>
-      <div id="roster-container">
-        <div class="inputFieldsContainer">
-          <div>
-            <div class="half-width-textarea-container">
-              <label for="roster-filename-input" class="labels">Filename</label>
-              <input type="text" id="roster-filename-input" />
-            </div>
-            <div class="half-width-textarea-container">
-              <label for="suffix-input" class="labels">Suffix</label>
-              <input type="text" id="suffix-input" value="prame" />
-            </div>
-          </div>
-          <div>
-            <div class="half-width-textarea-container">
-              <label for="teamNameInput" class="labels">Team Names</label>
-              <textarea
-                type="text"
-                id="teamNameInput"
-                placeholder="(First two get tran slots)"
-              ></textarea>
-            </div>
-            <div class="half-width-textarea-container">
-              <label for="venueInput" class="labels">Venue</label>
-              <textarea type="text" id="venueInput"></textarea>
-            </div>
-          </div>
-          <div>
-            <div class="half-width-textarea-container">
-              <label for="coachesInput" class="labels">Coaches</label>
-              <textarea
-                type="text"
-                id="coachesInput"
-                placeholder="(First two get tran slots)"
-              ></textarea>
-            </div>
-            <div class="half-width-textarea-container">
-              <label for="commentatorsInput" class="labels">Commentators</label>
-              <textarea type="text" id="commentatorsInput"></textarea>
-            </div>
-          </div>
-          <div id="teamTypeContainer">
-            <input
-              type="radio"
-              id="BothRadio"
-              name="teamType"
-              value="Both"
-              checked
-            />
-            <label for="BothRadio">Both</label>
-            <input
-              type="radio"
-              id="homeTeamRadio"
-              name="teamType"
-              value="Home"
-            />
-            <label for="homeTeamRadio">Home</label>
-            <input
-              type="radio"
-              id="awayTeamRadio"
-              name="teamType"
-              value="Away"
-            />
-            <label for="awayTeamRadio">Away</label>
-          </div>
-          <label for="rawRoster" class="labels">Roster</label>
-          <textarea
-            placeholder="LeBron James&#10;*Michael Jordan&#10;Buckets, Jimmy*&#10;Luka Dončić77&#10;Curry,Stephen&#10;Giannis Antetokounmpo`&#10;&#10;* or `(backtick): add to tran slot (up to 10, or 5 per team)&#10;&#10;&#10;&#10;Output:&#10;&#10;> Roster.txt - alphabetized, grouped by last name &#10;&#10;> Word List.txt - fullnames, lastnames, alone & w/ suffixed spoken form&#10;&#10;> tran slots - listed below (copy/paste to your sub list)"
-            type="text"
-            rows="18"
-            cols="85"
-            id="rawRoster"
-          ></textarea>
-        </div>
-
-        <input
-          id="submitRoster"
-          type="submit"
-          value="Get Roster and Word List"
-        />
-
-        <p id="tranSlots"></p>
       </div>
     </div>
 

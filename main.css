@@ -5,7 +5,6 @@ body {
   background-color: #dddddd;
   overflow: auto;
   color: white;
-  box-sizing: border-box;
 }
 
 a {
@@ -40,28 +39,23 @@ a {
 
 #container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
-  padding: 50px;
+  align-items: center;
+  padding: 16px;
 }
 
 #schedule-container {
+  margin-top: 200px;
   display: flex;
   flex-direction: column;
-  padding-right: 30px;
-}
-
-#schedule-container > * {
-  margin: 4px 0;
+  width: 60%;
 }
 
 #roster-container {
   display: flex;
   flex-direction: column;
-}
-
-#roster-container > * {
-  margin: 4px 0;
+  width: 60%;
 }
 
 #submitSchedule {
@@ -73,6 +67,8 @@ a {
 }
 
 #submitRoster {
+  width: 80%;
+  margin: auto;
   background-color: #001f3f;
   color: white;
   border-radius: 10px;
@@ -109,11 +105,6 @@ textarea {
   border-radius: 4px;
   padding-top: 22px;
   font: inherit;
-}
-
-input[type="submit"] {
-  height: 50px;
-  text-decoration: none;
 }
 
 .inputFieldsContainer {
@@ -155,14 +146,64 @@ input[type="submit"] {
   padding: 0 6px;
   margin-bottom: -18px;
   z-index: 1;
-  color: rgba(0, 31, 63, 0.6);
+  color: rgb(0, 31, 63);
   border-radius: 2px;
   background-color: white;
 }
 
+#team-shared-container {
+  width: 80%;
+  align-self: center;
+  border: dotted;
+  border-width: thin;
+  border-bottom: none;
+  border-color: rgb(0, 31, 63);
+  background-color: rgba(0, 31, 63, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 14px;
+  box-sizing: border-box;
+  margin-bottom: 11px;
+  border-radius: 5px;
+}
+
+#team-shared-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+#team-shared-container input {
+  margin-bottom: 0;
+}
+
+#team-shared-container textarea {
+  margin-bottom: 0;
+}
+
+.roster-textarea-container {
+  display: flex;
+  flex-direction: column;
+  width: 49%;
+}
+
+#rawRoster1 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#rawRoster2 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .half-width-textarea-container {
-  width: 48%;
   height: 100%;
+  width: 49%;
   display: flex;
   flex-direction: column;
 }
@@ -172,24 +213,38 @@ input[type="submit"] {
   width: 100%;
 }
 
-#teamTypeContainer {
-  width: 50%;
-  height: 1.3em;
+.inputFieldsContainer textarea {
+  padding-top: 20px;
+}
+
+#separate-submit-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
   margin: auto;
-  margin-bottom: 16px;
+  width: 80%;
 }
 
-#teamTypeContainer > input {
-  width: initial;
-  height: 1em;
+#separate-submit-container input {
+  background-color: #001f3f;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s ease-in-out;
+  height: 2.2em;
+  font-size: 1em;
+  padding: 0;
 }
 
-#teamTypeContainer > label {
-  margin-left: -30px;
-}
-
-.inputFieldsContainer > textarea {
-  padding-top: 30px;
+.separator {
+  box-sizing: border-box;
+  width: 0;
+  height: 2.8em;
+  color: rgba(0, 31, 63, 0.6);
+  border-left: solid;
+  border-right: solid;
+  border-width: 3px;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 1000px) {
