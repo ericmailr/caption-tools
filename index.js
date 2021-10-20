@@ -2,7 +2,7 @@
 // add option to not sort alphabetically
 // handle jr, III, II
 // should probably auto cap first letters
-// make a scraper for sidearm grids, just grab player name class
+// could make a scraper for sidearm grids, just grab player name class, coaches would be a little more annoying
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
@@ -388,9 +388,9 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   console.log("roster:\n" + roster);
   console.log("wordList:\n" + wordList);
   console.log("subList:\n" + printTranSlots(tranSlots));
-  //rosterLink.click();
-  //wordListLink.click();
-  //subListLink.click();
+  rosterLink.click();
+  wordListLink.click();
+  subListLink.click();
 };
 
 Date.prototype.addDays = function (days) {
