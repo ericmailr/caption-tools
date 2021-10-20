@@ -1,8 +1,12 @@
 // TODO
+// input for column number with names of pasted grid roster
+// set filename to teamname one if blank
 // add option to not sort alphabetically
 // handle jr, III, II
 // should probably auto cap first letters
 // could make a scraper for sidearm grids, just grab player name class, coaches would be a little more annoying
+// add custom tran option
+// add custom prep time for schedule
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
@@ -52,6 +56,8 @@ const compareStrings = (a, b) => {
 };
 
 const compare = (a, b) => {
+  a = a.toLowerCase();
+  b = b.toLowerCase();
   const splitA = a.split(" ");
   const splitB = b.split(" ");
   const lastA = splitA[splitA.length - 1];
@@ -146,6 +152,7 @@ const printTranSlots = (tranSlots) => {
 const getNameAsArray = (fullName) => {
   let lastName = "";
   fullName = fullName.trim();
+  fullName = fullName.replace(/ *\([^)]*\) */g, "");
   //fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   //fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*\,]/g, "");
   if (fullName.includes("\t")) {
@@ -216,6 +223,9 @@ const processRawArray = (rawArray) => {
   alphabeticalRosterArray.forEach((fullName, i) => {
     let names = fullName.split(" ");
     lastName = names.at(-1);
+    if (lastName === "`" || lastName === "*") {
+      lastName = names.at(-2);
+    }
     if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
       prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
       alphabeticalRosterArray[i] = "\n" + alphabeticalRosterArray[i];
@@ -248,9 +258,12 @@ const getRoster = (
   wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
   roster += venueName + "\n";
 
+  let playersOnlyRoster = "";
+
   rosterArray.forEach((playerName) => {
     wordList += getVocabEntries(playerName);
     roster += playerName + "\n";
+    playersOnlyRoster += playerName + "\n";
   });
   let playersOnlyWordList = wordList;
 
@@ -276,23 +289,25 @@ const getRoster = (
   });
 
   tranSlots = getTranSlots();
-  return [roster, wordList, tranSlots, playersOnlyWordList];
+  return [roster, wordList, tranSlots, playersOnlyRoster, playersOnlyWordList];
 };
 
 const getBigRoster = () => {
   tranSlotNames = [];
-  let [r1, w1, t1, playersOnlyWordList] = getRoster(
+  let [r1, w1, t1, playersOnlyRoster1, playersOnlyWordList] = getRoster(
     team1NamesInput,
     rawRoster1Input,
     coaches1Input
   );
+  rawRoster1Input.value = playersOnlyRoster1;
   let tranSlotNames1 = tranSlotNames;
-  let [r2, w2, t2] = getRoster(
+  let [r2, w2, t2, playersOnlyRoster2] = getRoster(
     team2NamesInput,
     rawRoster2Input,
     coaches2Input,
     tranSlotNames1
   );
+  rawRoster2Input.value = playersOnlyRoster2;
 
   let teamNamesArray = getProcessedGroupArray(team1NamesInput.value)
     .concat(getProcessedGroupArray(team2NamesInput.value))
@@ -355,8 +370,10 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   let rosterLink = document.createElement("a");
   let wordListLink = document.createElement("a");
   let subListLink = document.createElement("a");
-  let filename1 = filename1Input.value;
-  let filename2 = filename2Input.value;
+  let filename1 =
+    filename1Input.value === "" ? team1NamesInput.value : filename1Input;
+  let filename2 =
+    filename2Input.value === "" ? team2NamesInput.value : filename2Input;
   if (filename2 === "") {
     rosterLink.download = `${filename1} roster.txt`;
     wordListLink.download = `${filename1} word list.txt`;
@@ -518,18 +535,24 @@ submitRosterButton.addEventListener("click", getBigRoster);
 submitRoster1Button.addEventListener("click", () => {
   //added last
   tranSlotNames = [];
-  let [r, w, t] = getRoster(
+  let [r, w, t, playersOnlyRoster] = getRoster(
     team1NamesInput,
     rawRoster1Input,
     coaches1Input,
     tranSlots
   );
+  rawRoster1Input.value = playersOnlyRoster;
   downloadFiles(r, w, t);
 });
 
 submitRoster2Button.addEventListener("click", () => {
   //added last
   tranSlotNames = [];
-  let [r, w, t] = getRoster(team2NamesInput, rawRoster2Input, coaches2Input);
+  let [r, w, t, playersOnlyRoster] = getRoster(
+    team2NamesInput,
+    rawRoster2Input,
+    coaches2Input
+  );
+  rawRoster2Input.value = playersOnlyRoster;
   downloadFiles(r, w, t);
 });
