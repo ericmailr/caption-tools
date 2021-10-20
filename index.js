@@ -2,6 +2,7 @@
 // add option to not sort alphabetically
 // handle jr, III, II
 // should probably auto cap first letters
+// make a scraper for sidearm grids, just grab player name class
 
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
@@ -145,7 +146,12 @@ const printTranSlots = (tranSlots) => {
 const getNameAsArray = (fullName) => {
   let lastName = "";
   fullName = fullName.trim();
-  fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  //fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  //fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*\,]/g, "");
+  if (fullName.includes("\t")) {
+    fullName = fullName.split("\t");
+    fullName = fullName[1].trim();
+  }
   if (fullName != "") {
     if (fullName.includes(",")) {
       let names = fullName.split(",");
@@ -382,9 +388,9 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   console.log("roster:\n" + roster);
   console.log("wordList:\n" + wordList);
   console.log("subList:\n" + printTranSlots(tranSlots));
-  rosterLink.click();
-  wordListLink.click();
-  subListLink.click();
+  //rosterLink.click();
+  //wordListLink.click();
+  //subListLink.click();
 };
 
 Date.prototype.addDays = function (days) {
