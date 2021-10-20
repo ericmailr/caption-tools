@@ -58,6 +58,7 @@ a {
   display: flex;
   flex-direction: column;
   width: 50%;
+  min-width: 600px;
 }
 
 #submitSchedule {
