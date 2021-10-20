@@ -5,7 +5,7 @@ body {
   background-color: #dddddd;
   overflow: auto;
   color: white;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Georgia, serif;
 }
 
 a {
@@ -148,6 +148,7 @@ textarea {
   left: 35%;
   text-align: center;
   padding: 0 6px;
+  padding-bottom: 2px;
   margin-top: 0;
   z-index: 1;
   border-radius: 5px;
