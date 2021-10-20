@@ -144,15 +144,18 @@ textarea {
 .labels {
   width: 120px;
   padding: 0 6px;
-  margin-bottom: -18px;
+  margin-bottom: -20px;
   z-index: 1;
   color: rgb(0, 31, 63);
   border-radius: 2px;
   background-color: white;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(0, 31, 63, 0.8);
+  font-variant: small-caps;
 }
 
 #team-shared-container {
-  width: 80%;
+  width: 100%;
   align-self: center;
   border: dotted;
   border-width: thin;

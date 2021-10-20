@@ -192,7 +192,7 @@ const getVocabEntries = (entry, isCoach = false, isName = true) => {
   } else {
     entries = "";
     entries += entry + "\n";
-    entries += `${entry}\\${entry}`;
+    entries += `${entry}\\${entry} ${suffix}`;
   }
   return entries;
 };
@@ -318,7 +318,6 @@ const getBigRoster = () => {
   });
   roster += "\n";
   rosterArray.forEach((name) => {
-    name = name.replace("\n", "");
     if (name.trim() !== "") {
       roster += name + "\n";
     }
