@@ -152,8 +152,8 @@ const printTranSlots = (tranSlots) => {
 const getNameAsArray = (fullName) => {
   let lastName = "";
   fullName = fullName.trim();
+  fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   fullName = fullName.replace(/ *\([^)]*\) */g, "");
-  //fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   //fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*\,]/g, "");
   if (fullName.includes("\t")) {
     fullName = fullName.split("\t");
