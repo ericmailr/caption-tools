@@ -57,7 +57,7 @@ a {
 #roster-container {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 50%;
 }
 
 #submitSchedule {
@@ -66,11 +66,16 @@ a {
   border-radius: 10px;
   cursor: pointer;
   transition: opacity 0.15s ease-in-out;
+  padding: 10px;
 }
 
 #submitRoster {
   width: 80%;
+  padding: 10px;
   margin: auto;
+  background-color: #001f3f;
+  background-color: #1f305e;
+  background-color: rgba(31, 48, 94, 0.85);
   background-color: #001f3f;
   color: white;
   border-radius: 10px;
@@ -87,14 +92,13 @@ a {
 }
 
 input {
-  height: 2.5em;
   font-size: 1.3em;
   margin-bottom: 16px;
   border-radius: 0.5;
   outline: none;
   box-shadow: 5px 5px 16px -5px rgba(0, 0, 0, 0.8);
   border-style: none;
-  padding-left: 10px;
+  padding-left: 12px;
   border-radius: 4px;
 }
 
@@ -112,6 +116,7 @@ textarea {
 .inputFieldsContainer {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .inputFieldsContainer > div {
@@ -132,33 +137,27 @@ textarea {
   white-space: pre-line;
 }
 
-#teamTypeContainer {
-  display: flex;
-  align-items: center;
-  color: black;
-}
-
-#teamTypeContainer > * {
-  margin: 10px;
-  box-shadow: none;
+#rawSchedule {
+  position: relative;
 }
 
 .labels {
-  width: 150px;
+  position: absolute;
+  width: 40%;
+  top: -3px;
+  left: 30%;
+  text-align: center;
   padding: 0 6px;
-  margin-bottom: -20px;
+  margin-top: 0;
   z-index: 1;
-  color: rgb(0, 31, 63);
-  border-radius: 2px;
-  background-color: white;
-  text-decoration-thickness: 1px;
-  text-decoration-color: rgba(0, 31, 63, 0.8);
+  border-radius: 5px;
+  background-color: rgba(31, 48, 94, 0.75);
+  color: white;
   font-variant: small-caps;
   font-size: 14px;
 }
 
 #team-shared-container {
-  width: 100%;
   align-self: center;
   border-color: rgb(0, 31, 63);
   background-color: rgba(0, 31, 63, 0.2);
@@ -166,7 +165,7 @@ textarea {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 14px;
+  padding: 4px 10px;
   box-sizing: border-box;
   margin-bottom: 11px;
   border-radius: 5px;
@@ -182,13 +181,16 @@ textarea {
 
 #team-shared-container input {
   margin-bottom: 0;
+  text-align: center;
 }
 
 #team-shared-container textarea {
   margin-bottom: 0;
+  text-align: center;
 }
 
 .roster-textarea-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 49%;
@@ -209,11 +211,13 @@ textarea {
   width: 49%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .half-width-textarea-container > textarea {
   box-sizing: border-box;
   width: 100%;
+  text-align: center;
 }
 
 .inputFieldsContainer textarea {
@@ -229,6 +233,7 @@ textarea {
 }
 
 #separate-submit-container input {
+  background-color: rgba(31, 48, 94, 0.85);
   background-color: #001f3f;
   color: white;
   border-radius: 10px;
@@ -237,17 +242,6 @@ textarea {
   height: 2.2em;
   font-size: 1em;
   padding: 0;
-}
-
-.separator {
-  box-sizing: border-box;
-  width: 0;
-  height: 2.8em;
-  color: rgba(0, 31, 63, 0.6);
-  border-left: solid;
-  border-right: solid;
-  border-width: 3px;
-  border-radius: 5px;
 }
 
 @media screen and (max-width: 1000px) {
