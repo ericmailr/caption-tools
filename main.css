@@ -51,6 +51,7 @@ a {
   display: flex;
   flex-direction: column;
   width: 60%;
+  box-sizing: border-box;
 }
 
 #roster-container {
@@ -144,9 +145,9 @@ textarea {
 .labels {
   position: absolute;
   white-space: nowrap;
-  width: 30%;
+  width: 140px;
   top: -6px;
-  left: 35%;
+  left: calc(50% - 70px);
   text-align: center;
   padding: 0 6px;
   padding-bottom: 2px;
