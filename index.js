@@ -375,13 +375,13 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   let filename2 =
     filename2Input.value === "" ? team2NamesInput.value : filename2Input;
   if (filename2 === "") {
-    rosterLink.download = `${filename1} roster.txt`;
-    wordListLink.download = `${filename1} word list.txt`;
+    rosterLink.download = `roster-${filename1}.txt`;
+    wordListLink.download = `word list-${filename1}.txt`;
   } else {
-    rosterLink.download = `${filename1}/${filename2} roster.txt`;
-    wordListLink.download = `${filename1}/${filename2} word list.txt`;
+    rosterLink.download = `roster-${filename1}/${filename2}.txt`;
+    wordListLink.download = `word list-${filename1}/${filename2}.txt`;
   }
-  subListLink.download = `${filename1} sub list ${getScheduleFileSuffix()}.txt`;
+  subListLink.download = `sub list-${filename1}.txt`;
   rosterLink.href = window.URL.createObjectURL(rosterFile);
   wordListLink.href = window.URL.createObjectURL(wordListFile);
   subListLink.href = window.URL.createObjectURL(subListFile);
