@@ -44,6 +44,7 @@ a {
   justify-content: space-around;
   align-items: center;
   padding: 16px;
+  width: 100%;
 }
 
 #schedule-container {
@@ -58,7 +59,7 @@ a {
   display: flex;
   flex-direction: column;
   width: 50%;
-  min-width: 600px;
+  min-width: 700px;
 }
 
 #submitSchedule {
@@ -153,13 +154,15 @@ textarea {
   padding-bottom: 2px;
   margin-top: 0;
   z-index: 1;
-  border-radius: 5px;
+  border-radius: 3px;
   background-color: rgba(31, 48, 94, 0.75);
   background-color: #001f3f;
   background-color: rgba(0, 31, 63, 0.85);
   color: white;
   font-variant: small-caps;
   font-size: 14px;
+  width: calc(100% - 12px);
+  left: 0;
 }
 
 #team-shared-container {
@@ -249,12 +252,20 @@ textarea {
   padding: 0;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 700px) {
+  body {
+    overflow-x: hidden;
+  }
   #container {
     display: flex;
     flex-direction: column;
   }
-  #googleLink {
-    margin-bottom: 60px;
+  #roster-container {
+    width: 100%;
+    min-width: 100%;
+  }
+  .labels {
+    width: calc(100% - 12px);
+    left: 0;
   }
 }
