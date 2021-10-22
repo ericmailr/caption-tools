@@ -1,10 +1,10 @@
 html,
 body {
   margin: 0;
+  padding: 0;
   height: 100vh;
   background-color: #dddddd;
   overflow: auto;
-  color: white;
   font-family: Georgia, serif;
 }
 
@@ -100,8 +100,11 @@ input {
   outline: none;
   box-shadow: 5px 5px 16px -5px rgba(0, 0, 0, 0.8);
   border-style: none;
-  padding-left: 12px;
   border-radius: 4px;
+}
+
+input[type="submit"] {
+  border-top: none;
 }
 
 textarea {
@@ -109,29 +112,9 @@ textarea {
   border: none;
   box-shadow: 5px 5px 13px -5px rgba(0, 0, 0, 0.8);
   padding: 7px;
-  margin-bottom: 16px;
   border-radius: 4px;
-  padding-top: 22px;
+  padding-top: 6px;
   font: inherit;
-}
-
-.inputFieldsContainer {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.inputFieldsContainer > div {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.inputFieldsContainer input {
-  padding-top: 12px;
-  padding-bottom: 0;
-  height: 2em;
-  font-size: 1em;
 }
 
 #tranSlots {
@@ -165,6 +148,11 @@ textarea {
   left: 0;
 }
 
+#commentatorsInput {
+  border-top: solid;
+  border-width: 1em;
+}
+
 #team-shared-container {
   align-self: center;
   border-color: rgb(0, 31, 63);
@@ -177,6 +165,8 @@ textarea {
   box-sizing: border-box;
   margin-bottom: 11px;
   border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #team-shared-container > div {
@@ -184,7 +174,18 @@ textarea {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 10px 0;
+}
+
+#shared-game-info {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#shared-game-info > div {
+  display: flex;
+  flex-direction: column;
+  width: 32%;
 }
 
 #team-shared-container input {
@@ -201,7 +202,6 @@ textarea {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 49%;
 }
 
 #rawRoster1 {
@@ -228,10 +228,6 @@ textarea {
   text-align: center;
 }
 
-.inputFieldsContainer textarea {
-  padding-top: 20px;
-}
-
 #separate-submit-container {
   display: flex;
   justify-content: space-between;
@@ -250,6 +246,92 @@ textarea {
   height: 2.2em;
   font-size: 1em;
   padding: 0;
+}
+
+.halves-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#teams-main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.team-stuff {
+  display: flex;
+  flex-direction: column;
+  width: 47%;
+  background-color: rgba(0, 31, 63, 0.2);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.roster-textarea-container {
+  margin-top: 10px;
+}
+
+.input-label {
+  z-index: 1;
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-bottom: calc(-1em - 3px);
+  padding: 3px;
+}
+
+input {
+  border-top: solid;
+  border-width: 1em;
+}
+
+textarea {
+  border-top: solid;
+  border-width: 1em;
+}
+
+#checkbox-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: black;
+  color: white;
+  padding: 7px;
+  border-radius: 10px;
+}
+
+#mini-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#player-col-number {
+}
+
+#mini-input-container > * {
+  width: 46%;
+}
+#mini-input-container textarea {
+  width: 100%;
+}
+
+.third-width-container {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+}
+
+#player-col-number-input {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#player-col-number-input textarea {
+  padding: 7px 2px;
 }
 
 @media screen and (max-width: 700px) {

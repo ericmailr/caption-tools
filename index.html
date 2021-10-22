@@ -10,132 +10,211 @@
   </head>
   <body>
     <div id="container">
-      <p style="color: black; margin-bottom: 50px;">Note: Work in progress! All fields are optional. Be sure to allow chrome to launch multiple automatic downloads (3 txt files).</p>
+      <p style="color: black; margin-bottom: 5px">
+        Note: Work in progress! All fields are optional. Be sure to allow chrome
+        to launch multiple automatic downloads (3 txt files). Column Number
+        thingy doesn't work yet.
+      </p>
       <div id="roster-container">
-        <div class="inputFieldsContainer">
-          <div>
-            <div class="half-width-textarea-container">
-              <label for="team1NameInput" class="labels">team one name/s</label>
-              <textarea type="text" id="team1NameInput" spellcheck="false"></textarea>
+        <div id="teams-main-container">
+          <div id="team1stuff" class="team-stuff">
+            <div class="halves-container">
+              <div class="half-width-textarea-container">
+                <div class="input-label">team one titles</div>
+                <textarea
+                  type="text"
+                  id="team1NameInput"
+                  rows="3"
+                  spellcheck="false"
+                ></textarea>
+              </div>
+              <div class="half-width-textarea-container">
+                <div class="input-label">coaches</div>
+                <textarea
+                  id="coaches1Input"
+                  rows="3"
+                  spellcheck="false"
+                ></textarea>
+              </div>
             </div>
-            <div class="half-width-textarea-container">
-              <label for="team2NameInput" class="labels">team two name/s</label>
-              <textarea type="text" id="team2NameInput" spellcheck="false"></textarea>
-            </div>
-          </div>
-          <div>
-            <div class="half-width-textarea-container">
-              <label for="coaches1Input" class="labels">coaches</label>
-              <textarea type="text" id="coaches1Input" spellcheck="false"></textarea>
-            </div>
-            <div class="half-width-textarea-container">
-              <label for="coaches2Input" class="labels">coaches</label>
-              <textarea type="text" id="coaches2Input" spellcheck="false"></textarea>
-            </div>
-          </div>
-          <div>
             <div class="roster-textarea-container">
-              <label for="rawRoster1" class="labels">roster one</label>
+              <div class="input-label">roster one</div>
               <div>
                 <textarea
                   placeholder="Paste directly from NCAA grid, or use excel as usual.&#10;&#10;LeBron James&#10;Jordan, Michael*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77&#10;&#10;Output:&#10;> Roster.txt &#10;> Word List.txt &#10;&#9;- fullnames, lastnames, + w/ suffixed spoken form&#10;> Sub List (tran slots)"
-                  type="text" spellcheck="false"
-                  rows="11"
+                  type="text"
+                  spellcheck="false"
+                  rows="14"
                   cols="40"
                   id="rawRoster1"
                 ></textarea>
               </div>
             </div>
+          </div>
+          <div id="team2Stuff" class="team-stuff">
+            <div class="halves-container">
+              <div class="half-width-textarea-container">
+                <div class="input-label">team two titles</div>
+                <textarea
+                  type="text"
+                  id="team2NameInput"
+                  rows="3"
+                  spellcheck="false"
+                ></textarea>
+              </div>
+              <div class="half-width-textarea-container">
+                <div class="input-label">coaches</div>
+                <textarea
+                  type="text"
+                  id="coaches2Input"
+                  rows="3"
+                  spellcheck="false"
+                ></textarea>
+              </div>
+            </div>
             <div class="roster-textarea-container">
-              <label for="rawRoster2" class="labels">roster two</label>
+              <div class="input-label">roster two</div>
               <div>
                 <textarea
                   placeholder="Paste directly from NCAA grid, or use excel as usual.&#10;&#10;LeBron James&#10;Jordan, Michael*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77&#10;&#10;Output:&#10;> Roster.txt &#10;> Word List.txt &#10;&#9;- fullnames, lastnames, + w/ suffixed spoken form&#10;> Sub List (tran slots)"
-                  type="text" spellcheck="false"
-                  rows="11"
+                  type="text"
+                  spellcheck="false"
+                  rows="14"
                   cols="40"
                   id="rawRoster2"
                 ></textarea>
               </div>
             </div>
           </div>
-          <div id="team-shared-container">
-            <div>
-              <div class="half-width-textarea-container">
-                <label for="venue-input" class="labels">venue</label>
-                <input type="text" id="venue-input" spellcheck="false" />
+        </div>
+        <div id="team-shared-container">
+          <div id="settings">
+            <div id="mini-input-container" class="third-width-container">
+              <div id="checkbox-container">
+                <input
+                  type="checkbox"
+                  id="alphabetizeInput"
+                  name="alphabetizeInput"
+                  value="Alphabetize?"
+                  checked="true"
+                />
+                <label for="alphabetizeInput">Alphabetize?</label><br />
               </div>
-              <div class="half-width-textarea-container">
-                <label for="suffix-input" class="labels">suffix</label>
-                <input type="text" id="suffix-input" value="prame" spellcheck="false" />
+              <div id="player-col-number-input">
+                <div class="input-label">players col #</div>
+                <input
+                  type="number"
+                  id="player-col-number"
+                  name="quantity"
+                  min="1"
+                  max="5"
+                  placeholder="(grid)"
+                  spellcheck="false"
+                />
               </div>
             </div>
-            <div>
-              <div class="half-width-textarea-container">
-                <label for="officiatorsInput" class="labels"
-                  >officiating crew</label
-                >
-                <textarea type="text" id="officiatorsInput" spellcheck="false"></textarea>
-              </div>
-              <div class="half-width-textarea-container">
-                <label for="commentatorsInput" class="labels"
-                  >commentators</label
-                >
-                <textarea type="text" id="commentatorsInput" spellcheck="false"></textarea>
-              </div>
+            <div class="third-width-container">
+              <div class="input-label">suffix</div>
+              <textarea
+                type="text"
+                id="suffix-input"
+                value="prame"
+                rows="1"
+                spellcheck="false"
+              ></textarea>
             </div>
-            <div class="filenames">
-              <div class="half-width-textarea-container">
-                <label for="filename1Input" class="labels">filename-one</label>
-                <input type="text" id="filename1Input" spellcheck="false"></input>
-              </div>
-              <div class="half-width-textarea-container">
-                <label for="filename2Input" class="labels">filename-two</label>
-                <input type="text" id="filename2Input" spellcheck="false"></input>
-              </div>
+            <div class="third-width-container">
+              <div class="input-label">tran prefix</div>
+              <textarea
+                type="text"
+                id="prefix-input"
+                value="tran"
+                rows="1"
+                spellcheck="false"
+              ></textarea>
+            </div>
+          </div>
+          <div id="shared-game-info">
+            <div>
+              <div class="input-label">venue</div>
+              <textarea
+                type="text"
+                id="venue-input"
+                rows="3"
+                spellcheck="false"
+              ></textarea>
+            </div>
+            <div>
+              <div class="input-label">officiating crew</div>
+              <textarea
+                type="text"
+                id="officiatorsInput"
+                rows="3"
+                spellcheck="false"
+              ></textarea>
+            </div>
+            <div>
+              <div class="input-label">commentators</div>
+              <textarea
+                type="text"
+                id="commentatorsInput"
+                rows="3"
+                spellcheck="false"
+              ></textarea>
             </div>
           </div>
         </div>
         <div id="separate-submit-container">
           <div class="half-width-textarea-container">
-            <input id="submitRoster1" type="submit" spellcheck="false" value="Just Team 1" />
+            <input
+              id="submitRoster1"
+              type="submit"
+              spellcheck="false"
+              value="Just Team 1"
+            />
           </div>
           <div class="half-width-textarea-container">
-            <input id="submitRoster2" type="submit" spellcheck="false" value="Just Team 2" />
+            <input
+              id="submitRoster2"
+              type="submit"
+              spellcheck="false"
+              value="Just Team 2"
+            />
           </div>
         </div>
         <input
           id="submitRoster"
-          type="submit" spellcheck="false"
+          type="submit"
+          spellcheck="false"
           value="Get Match Roster, Word List, Sub List"
         />
 
         <p id="tranSlots"></p>
       </div>
       <div id="schedule-container">
-        <div class="inputFieldsContainer">
-          <label for="rawSchedule" class="labels">intranet schedule</label>
-          <textarea
-            placeholder="(for importing events to google calendar)"
-            type="text" spellcheck="false"
-            rows="18"
-            cols="85"
-            id="rawSchedule"
-          ></textarea>
-        </div>
-        <input
-          id="submitSchedule"
-          type="submit" spellcheck="false"
-          value="Get CSV for Google Calendar"
-        />
-        <div id="googleLinkContainer">
-          <a
-            id="googleLink"
-            target="_blank"
-            href="https://calendar.google.com/calendar/u/0/r/settings/export"
-            >Google Calendar import page</a
-          >
-        </div>
+        <div class="input-label">intranet schedule</div>
+        <textarea
+          placeholder="(for importing events to google calendar)"
+          type="text"
+          spellcheck="false"
+          rows="18"
+          cols="85"
+          id="rawSchedule"
+        ></textarea>
+      </div>
+      <input
+        id="submitSchedule"
+        type="submit"
+        spellcheck="false"
+        value="Get CSV for Google Calendar"
+      />
+      <div id="googleLinkContainer">
+        <a
+          id="googleLink"
+          target="_blank"
+          href="https://calendar.google.com/calendar/u/0/r/settings/export"
+          >Google Calendar import page</a
+        >
       </div>
     </div>
 

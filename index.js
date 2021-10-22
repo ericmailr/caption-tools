@@ -1,11 +1,8 @@
 // TODO
-// input for column number with names of pasted grid roster
-// set filename to teamname one if blank
-// add option to not sort alphabetically
+//
 // handle jr, III, II
 // should probably auto cap first letters
 // could make a scraper for sidearm grids, just grab player name class, coaches would be a little more annoying
-// add custom tran option
 // add custom prep time for schedule
 
 const submitScheduleButton = document.getElementById("submitSchedule");
@@ -22,6 +19,7 @@ const rawRoster2Input = document.getElementById("rawRoster2");
 const team1NamesInput = document.getElementById("team1NameInput");
 const team2NamesInput = document.getElementById("team2NameInput");
 
+const alphabetizeInput = document.getElementById("alphabetizeInput");
 const suffixInput = document.getElementById("suffix-input");
 let suffix = "prame";
 const tranSlotsP = document.getElementById("tranSlots");
@@ -31,6 +29,8 @@ const coaches1Input = document.getElementById("coaches1Input");
 const coaches2Input = document.getElementById("coaches2Input");
 const commentatorsInput = document.getElementById("commentatorsInput");
 const officiatorsInput = document.getElementById("officiatorsInput");
+
+const tranPrefixInput = document.getElementById("prefix-input");
 
 const filename1Input = document.getElementById("filename1Input");
 const filename2Input = document.getElementById("filename2Input");
@@ -68,12 +68,13 @@ const compare = (a, b) => {
 };
 
 const initTranSlots = () => {
+  let prefix = tranPrefixInput.value === "" ? "tran" : tranPrefixInput.value;
   let tranArray = [];
   for (let i = 0; i < 35; i++) {
     if (i < 9) {
-      tranArray.push(`tran0${i + 1}|`);
+      tranArray.push(`${prefix}0${i + 1}|`);
     } else {
-      tranArray.push(`tran${i + 1}|`);
+      tranArray.push(`${prefix}${i + 1}|`);
     }
   }
   return tranArray;
@@ -95,15 +96,24 @@ const getProcessedGroupArray = (input) => {
 };
 
 const getTranSlots = () => {
+  let prefix = tranPrefixInput.value === "" ? "tran" : tranPrefixInput.value;
   tranSlots = initTranSlots();
   let commentatorNames = getProcessedGroupArray(commentatorsInput.value);
   tranSlots[5] =
-    commentatorNames.length > 0 ? `tran06|${commentatorNames[0]}` : "tran06|";
+    commentatorNames.length > 0
+      ? `${prefix}06|${commentatorNames[0]}`
+      : `${prefix}06|`;
   tranSlots[6] =
-    commentatorNames.length > 1 ? `tran07|${commentatorNames[1]}` : "tran07|";
+    commentatorNames.length > 1
+      ? `${prefix}|${commentatorNames[1]}`
+      : `${prefix}07|`;
   tranSlots[7] =
-    commentatorNames.length > 2 ? `tran07|${commentatorNames[2]}` : "tran08|";
-  let alphabeticalTranSlotNames = tranSlotNames.sort(compare).slice(0, 10);
+    commentatorNames.length > 2
+      ? `${prefix}|${commentatorNames[2]}`
+      : `${prefix}08|`;
+  let alphabeticalTranSlotNames = alphabetizeInput.checked
+    ? tranSlotNames.sort(compare).slice(0, 10)
+    : tranSlotNames.slice(0, 10);
 
   let firstIndex = 10;
   alphabeticalTranSlotNames.forEach((name, index) => {
@@ -121,18 +131,24 @@ const getTranSlots = () => {
   let team1Names = getProcessedGroupArray(team1NamesInput.value);
   let team2Names = getProcessedGroupArray(team2NamesInput.value);
 
-  tranSlots[0] = team1Names.length > 0 ? `tran01|${team1Names[0]}` : "tran01|";
-  tranSlots[1] = team2Names.length > 0 ? `tran02|${team2Names[0]}` : "tran02|";
-  tranSlots[2] = team1Names.length > 1 ? `tran03|${team1Names[1]}` : `tran03|`;
-  tranSlots[3] = team2Names.length > 1 ? `tran04|${team2Names[1]}` : `tran04|`;
+  tranSlots[0] =
+    team1Names.length > 0 ? `${prefix}01|${team1Names[0]}` : `${prefix}01|`;
+  tranSlots[1] =
+    team2Names.length > 0 ? `${prefix}02|${team2Names[0]}` : `${prefix}02|`;
+  tranSlots[2] =
+    team1Names.length > 1 ? `${prefix}03|${team1Names[1]}` : `${prefix}03|`;
+  tranSlots[3] =
+    team2Names.length > 1 ? `${prefix}04|${team2Names[1]}` : `${prefix}04|`;
   tranSlots[4] = venueInput.value
-    ? `tran05|${getProcessedGroupArray(venueInput.value)[0]}`
-    : "tran05|";
+    ? `${prefix}05|${getProcessedGroupArray(venueInput.value)[0]}`
+    : `${prefix}05|`;
 
   let coaches1 = getProcessedGroupArray(coaches1Input.value);
   let coaches2 = getProcessedGroupArray(coaches2Input.value);
-  tranSlots[31] = coaches1.length > 0 ? `tran32|${coaches1[0]}` : "tran32|";
-  tranSlots[33] = coaches2.length > 0 ? `tran34|${coaches2[0]}` : "tran34|";
+  tranSlots[31] =
+    coaches1.length > 0 ? `${prefix}32|${coaches1[0]}` : `${prefix}32|`;
+  tranSlots[33] =
+    coaches2.length > 0 ? `${prefix}34|${coaches2[0]}` : `${prefix}34|`;
 
   return tranSlots;
 };
@@ -218,7 +234,9 @@ const processRawArray = (rawArray) => {
       rosterArray.push(fullName);
     }
   });
-  let alphabeticalRosterArray = rosterArray.sort(compare);
+  let alphabeticalRosterArray = alphabetizeInput.checked
+    ? rosterArray.sort(compare)
+    : rosterArray;
   let prevLastNameFirstLetter = "a";
   alphabeticalRosterArray.forEach((fullName, i) => {
     let names = fullName.split(" ");
@@ -244,7 +262,8 @@ const getRoster = (
   let teamNamesArray = getProcessedGroupArray(teamNamesInput.value);
   let rosterArray = processRawArray(rawRosterInput.value.split("\n"));
   let coaches = getProcessedGroupArray(coachesInput.value);
-  let venueName = getProcessedGroupArray(venueInput.value)[0];
+  let venueNames = getProcessedGroupArray(venueInput.value);
+  let venueName = venueNames[0];
   venueName = venueName === undefined ? "" : venueName;
   let commentators = getProcessedGroupArray(commentatorsInput.value);
   let officiators = getProcessedGroupArray(officiatorsInput.value);
@@ -254,6 +273,9 @@ const getRoster = (
   teamNamesArray.forEach((teamName) => {
     roster += teamName + "\n";
     wordList += getVocabEntries(teamName, false, false);
+  });
+  venueNames.forEach((name) => {
+    wordList += "\n" + getVocabEntries(name, false, false) + "\n";
   });
   wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
   roster += venueName + "\n";
@@ -309,12 +331,18 @@ const getBigRoster = () => {
   );
   rawRoster2Input.value = playersOnlyRoster2;
 
-  let teamNamesArray = getProcessedGroupArray(team1NamesInput.value)
-    .concat(getProcessedGroupArray(team2NamesInput.value))
-    .sort(compare);
-  let rosterArray = processRawArray(rawRoster1Input.value.split("\n"))
-    .concat(processRawArray(rawRoster2Input.value.split("\n")))
-    .sort(compare);
+  let teamNamesArray = getProcessedGroupArray(team1NamesInput.value).concat(
+    getProcessedGroupArray(team2NamesInput.value)
+  );
+  teamNamesArray = alphabetizeInput.checked
+    ? teamNamesArray.sort(compare)
+    : teamNamesArray;
+  let rosterArray = processRawArray(rawRoster1Input.value.split("\n")).concat(
+    processRawArray(rawRoster2Input.value.split("\n"))
+  );
+  rosterArray = alphabetizeInput.checked
+    ? rosterArray.sort(compare)
+    : rosterArray;
   let coaches = getProcessedGroupArray(coaches1Input.value).concat(
     getProcessedGroupArray(coaches2Input.value)
   );
@@ -326,10 +354,20 @@ const getBigRoster = () => {
     let names = fullName.split(" ");
     lastName = names.at(-1);
     if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+      console.log(
+        `prevLastNameFirstLetter: ${prevLastNameFirstLetter} < ${lastName
+          .charAt(0)
+          .toLowerCase()}`
+      );
+      console.log(fullName.trim());
       prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
       rosterArray[i] = "\n" + fullName.trim();
+    } else {
+      rosterArray[i] = fullName.trim();
     }
   });
+
+  console.log(rosterArray);
 
   roster = "";
   teamNamesArray.forEach((name) => {
@@ -370,17 +408,10 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   let rosterLink = document.createElement("a");
   let wordListLink = document.createElement("a");
   let subListLink = document.createElement("a");
-  let filename1 =
-    filename1Input.value === "" ? team1NamesInput.value : filename1Input;
-  let filename2 =
-    filename2Input.value === "" ? team2NamesInput.value : filename2Input;
-  if (filename2 === "") {
-    rosterLink.download = `roster-${filename1}.txt`;
-    wordListLink.download = `word list-${filename1}.txt`;
-  } else {
-    rosterLink.download = `roster-${filename1}/${filename2}.txt`;
-    wordListLink.download = `word list-${filename1}/${filename2}.txt`;
-  }
+  let filename1 = team1NamesInput.value;
+  let filename2 = team2NamesInput.value || "noname";
+  rosterLink.download = `roster-${filename1}/${filename2}.txt`;
+  wordListLink.download = `word list-${filename1}/${filename2}.txt`;
   subListLink.download = `sub list-${filename1}.txt`;
   rosterLink.href = window.URL.createObjectURL(rosterFile);
   wordListLink.href = window.URL.createObjectURL(wordListFile);
