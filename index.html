@@ -10,26 +10,22 @@
   </head>
   <body>
     <div id="container">
-      <p
-        style="
-          color: black;
-          position: absolute;
-          top: 50px;
-          left: 10px;
-          width: 340px;
-        "
-      >
-        Notes: <br /><br />- Work in progress!<br /><br />- All fields are
-        optional. <br /><br />- Be sure to allow chrome to launch multiple
-        automatic downloads (3 txt files). <br /><br />- You can directly paste
-        full roster grid and select the players column number below to get just
-        that column. Not perfect but it works for a lot of rosters.<br /><br />
-        - Symbols should be auto removed/replaced. <br /><br />
-        - Comma-separated names (last, first or last,first) are fine.<br /><br />Output:<br /><br />>
-        Roster.txt <br />> Word List.txt <br />&emsp;- fullnames, lastnames,
-        <br />&emsp;w/ and w/out suffixed spoken form<br />> Sub List (tran
-        slots)
-      </p>
+      <ul id="notes">
+        <li>
+          - Work in progress!<br /><br />- All fields are optional.
+          <br /><br />- Be sure to allow chrome to launch multiple automatic
+          downloads (3 txt files). <br /><br />- You can directly paste full
+          roster grid and select the players column number below to get just
+          that column. Not perfect but it works for a lot of rosters.
+        </li>
+        <li>
+          - Symbols/numbers should be auto removed/replaced. <br /><br />
+          - Comma-separated names (last, first or last,first) are fine.<br /><br />OUTPUT:<br />>
+          Roster.txt <br />> Word List.txt <br />&emsp;- fullnames, lastnames,
+          w/ and w/out suffixed spoken form<br />> Sub List (tran slots)
+        </li>
+      </ul>
+      <button id="showNotesButton">Show/Hide Notes</button>
       <div id="roster-container">
         <div id="teams-main-container">
           <div id="team1stuff" class="team-stuff">
@@ -57,7 +53,7 @@
               <div class="input-label">roster one</div>
               <div>
                 <textarea
-                  placeholder="Michael Jordan*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77    (numbers/symbols okay)"
+                  placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add to tran slot, up to 5 &#10;&#10; You can paste full grid directly and choose players column."
                   type="text"
                   spellcheck="false"
                   rows="14"
@@ -92,7 +88,7 @@
               <div class="input-label">roster two</div>
               <div>
                 <textarea
-                  placeholder="Michael Jordan*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77    (numbers/symbols okay) "
+                  placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add to tran slot, up to 5 &#10;&#10; You can paste full grid directly and choose players column."
                   type="text"
                   spellcheck="false"
                   rows="14"
@@ -124,6 +120,7 @@
                   name="quantity"
                   min="1"
                   max="5"
+                  value="1"
                   placeholder="(pasted grid)"
                   spellcheck="false"
                 />

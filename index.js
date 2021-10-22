@@ -39,6 +39,14 @@ const filename2Input = document.getElementById("filename2Input");
 
 const playersColNumInput = document.getElementById("player-col-number");
 
+const notes = document.getElementById("notes");
+notes.style.display = "none";
+const showNotesButton = document.getElementById("showNotesButton");
+const toggleNotes = () => {
+  notes.style.display = notes.style.display === "flex" ? "none" : "flex";
+};
+showNotesButton.addEventListener("click", toggleNotes);
+
 const prepTime = 15;
 let tranSlotNames = [];
 let tranSlots;

@@ -6,6 +6,7 @@ body {
   background-color: #dddddd;
   overflow: auto;
   font-family: Georgia, serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -69,6 +70,7 @@ a {
   cursor: pointer;
   transition: opacity 0.15s ease-in-out;
   padding: 10px;
+  margin-top: 10px;
 }
 
 #submitRoster {
@@ -283,11 +285,13 @@ textarea {
 input {
   border-top: solid;
   border-width: 1.2em;
+  border-color: #001f3f;
 }
 
 textarea {
   border-top: solid;
   border-width: 1.2em;
+  border-color: #001f3f;
 }
 
 #checkbox-container {
@@ -295,7 +299,7 @@ textarea {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: black;
+  background-color: #001f3f;
   color: white;
   padding: 7px;
   border-radius: 10px;
@@ -341,6 +345,24 @@ input[type="number" i] {
 
 #player-col-number-input textarea {
   padding: 7px 2px;
+}
+
+#showNotesButton {
+  width: 200px;
+  padding: 5px;
+  align-self: center;
+}
+
+#notes {
+  display: none;
+  justify-content: space-around;
+  color: black;
+  width: 50%;
+}
+
+li {
+  list-style: none;
+  width: 40%;
 }
 
 @media screen and (max-width: 700px) {
