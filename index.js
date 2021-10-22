@@ -5,6 +5,8 @@
 // could make a scraper for sidearm grids, just grab player name class, coaches would be a little more annoying
 // add custom prep time for schedule
 
+// add a   check roster without downloading    button
+
 const submitScheduleButton = document.getElementById("submitSchedule");
 const rawScheduleInput = document.getElementById("rawSchedule");
 const scheduleContainerDiv = document.getElementById("scheduleContainer");
@@ -34,6 +36,8 @@ const tranPrefixInput = document.getElementById("prefix-input");
 
 const filename1Input = document.getElementById("filename1Input");
 const filename2Input = document.getElementById("filename2Input");
+
+const playersColNumInput = document.getElementById("player-col-number");
 
 const prepTime = 15;
 let tranSlotNames = [];
@@ -168,21 +172,23 @@ const printTranSlots = (tranSlots) => {
 const getNameAsArray = (fullName) => {
   let lastName = "";
   fullName = fullName.trim();
-  fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]|[0-9]/g, "");
   fullName = fullName.replace(/ *\([^)]*\) */g, "");
   //fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*\,]/g, "");
   if (fullName.includes("\t")) {
+    let col = playersColNumInput.value ? playersColNumInput.value : 1;
     fullName = fullName.split("\t");
-    fullName = fullName[1].trim();
+    fullName = fullName[col - 1].trim();
   }
   if (fullName != "") {
+    fullName = fullName.trim();
     if (fullName.includes(",")) {
       let names = fullName.split(",");
       lastName = names[0].trim();
       fullName = names[1].trim() + " " + names[0];
     } else {
       let names = fullName.split(" ");
-      lastName = names.at(-1);
+      lastName = names.length > 1 ? names[1].trim() : fullName;
     }
     fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*]/g, "");
     if (fullName.includes("*") || fullName.includes("`")) {
@@ -199,8 +205,11 @@ const getVocabEntries = (entry, isCoach = false, isName = true) => {
     return "";
   }
   entry = entry.trim().replace(/^\s*\n/gm, "");
+  console.log("entry: " + entry);
   if (isName) {
     let [fullName, lastName] = getNameAsArray(entry);
+    console.log("fullname: " + fullName);
+    console.log("lastname: " + lastName);
     entries = "";
     entries += `${fullName}\n${fullName}\\${fullName
       .replace(/\./g, "")
@@ -231,7 +240,9 @@ const processRawArray = (rawArray) => {
   rawArray.forEach((fullName) => {
     if (fullName !== "") {
       [fullName, lastName] = getNameAsArray(fullName);
-      rosterArray.push(fullName);
+      if (!rosterArray.includes(fullName)) {
+        rosterArray.push(fullName);
+      }
     }
   });
   let alphabeticalRosterArray = alphabetizeInput.checked
@@ -244,7 +255,10 @@ const processRawArray = (rawArray) => {
     if (lastName === "`" || lastName === "*") {
       lastName = names.at(-2);
     }
-    if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
+    if (
+      alphabetizeInput.checked &&
+      prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()
+    ) {
       prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
       alphabeticalRosterArray[i] = "\n" + alphabeticalRosterArray[i];
     }
@@ -261,6 +275,7 @@ const getRoster = (
   suffix = suffixInput.value === "" ? "prame" : suffixInput.value;
   let teamNamesArray = getProcessedGroupArray(teamNamesInput.value);
   let rosterArray = processRawArray(rawRosterInput.value.split("\n"));
+  rosterArray = [...new Set(rosterArray)];
   let coaches = getProcessedGroupArray(coachesInput.value);
   let venueNames = getProcessedGroupArray(venueInput.value);
   let venueName = venueNames[0];
@@ -354,20 +369,12 @@ const getBigRoster = () => {
     let names = fullName.split(" ");
     lastName = names.at(-1);
     if (prevLastNameFirstLetter < lastName.charAt(0).toLowerCase()) {
-      console.log(
-        `prevLastNameFirstLetter: ${prevLastNameFirstLetter} < ${lastName
-          .charAt(0)
-          .toLowerCase()}`
-      );
-      console.log(fullName.trim());
       prevLastNameFirstLetter = lastName.charAt(0).toLowerCase();
       rosterArray[i] = "\n" + fullName.trim();
     } else {
       rosterArray[i] = fullName.trim();
     }
   });
-
-  console.log(rosterArray);
 
   roster = "";
   teamNamesArray.forEach((name) => {

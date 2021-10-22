@@ -10,10 +10,23 @@
   </head>
   <body>
     <div id="container">
-      <p style="color: black; margin-bottom: 5px">
-        Note: Work in progress! All fields are optional. Be sure to allow chrome
-        to launch multiple automatic downloads (3 txt files). Column Number
-        thingy doesn't work yet.
+      <p
+        style="
+          color: black;
+          position: absolute;
+          top: 50px;
+          left: 10px;
+          width: 340px;
+        "
+      >
+        Notes: <br /><br />- Work in progress!<br /><br />- All fields are
+        optional. <br /><br />- Be sure to allow chrome to launch multiple
+        automatic downloads (3 txt files). <br /><br />- You can directly paste
+        full roster grid and select the players column number below to get just
+        that column. Not perfect but it works for a lot of rosters.
+        <br /><br />Output<br />> Roster.txt <br />> Word List.txt <br />&emsp;-
+        fullnames, lastnames, <br />&emsp;w/ and w/out suffixed spoken form<br />>
+        Sub List (tran slots)
       </p>
       <div id="roster-container">
         <div id="teams-main-container">
@@ -25,6 +38,7 @@
                   type="text"
                   id="team1NameInput"
                   rows="3"
+                  value="hello"
                   spellcheck="false"
                 ></textarea>
               </div>
@@ -41,7 +55,7 @@
               <div class="input-label">roster one</div>
               <div>
                 <textarea
-                  placeholder="Paste directly from NCAA grid, or use excel as usual.&#10;&#10;LeBron James&#10;Jordan, Michael*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77&#10;&#10;Output:&#10;> Roster.txt &#10;> Word List.txt &#10;&#9;- fullnames, lastnames, + w/ suffixed spoken form&#10;> Sub List (tran slots)"
+                  placeholder="Michael Jordan*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77    (numbers/symbols okay) &#10;&#10;Output:&#10;> Roster.txt &#10;> Word List.txt &#10;   - fullnames, lastnames, + w/ suffixed spoken form&#10;> Sub List (tran slots)"
                   type="text"
                   spellcheck="false"
                   rows="14"
@@ -76,7 +90,7 @@
               <div class="input-label">roster two</div>
               <div>
                 <textarea
-                  placeholder="Paste directly from NCAA grid, or use excel as usual.&#10;&#10;LeBron James&#10;Jordan, Michael*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77&#10;&#10;Output:&#10;> Roster.txt &#10;> Word List.txt &#10;&#9;- fullnames, lastnames, + w/ suffixed spoken form&#10;> Sub List (tran slots)"
+                  placeholder="Michael Jordan*  (* or ` to add to tran slot, up to 5)&#10;Dončić, Luka77    (numbers/symbols okay) "
                   type="text"
                   spellcheck="false"
                   rows="14"
@@ -98,7 +112,7 @@
                   value="Alphabetize?"
                   checked="true"
                 />
-                <label for="alphabetizeInput">Alphabetize?</label><br />
+                <label for="alphabetizeInput">Alphabetize</label>
               </div>
               <div id="player-col-number-input">
                 <div class="input-label">players col #</div>
@@ -108,7 +122,7 @@
                   name="quantity"
                   min="1"
                   max="5"
-                  placeholder="(grid)"
+                  placeholder="(pasted grid)"
                   spellcheck="false"
                 />
               </div>
@@ -121,7 +135,9 @@
                 value="prame"
                 rows="1"
                 spellcheck="false"
-              ></textarea>
+              >
+prame</textarea
+              >
             </div>
             <div class="third-width-container">
               <div class="input-label">tran prefix</div>
@@ -131,7 +147,9 @@
                 value="tran"
                 rows="1"
                 spellcheck="false"
-              ></textarea>
+              >
+tran</textarea
+              >
             </div>
           </div>
           <div id="shared-game-info">
