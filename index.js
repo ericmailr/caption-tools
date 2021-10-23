@@ -423,8 +423,8 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   let rosterLink = document.createElement("a");
   let wordListLink = document.createElement("a");
   let subListLink = document.createElement("a");
-  let filename1 = team1NamesInput.value;
-  let filename2 = team2NamesInput.value || "noname";
+  let filename1 = getProcessedGroupArray(team1NamesInput.value)[0];
+  let filename2 = getProcessedGroupArray(team2NamesInput.value)[0];
   rosterLink.download = `roster-${filename1}/${filename2}.txt`;
   wordListLink.download = `word list-${filename1}/${filename2}.txt`;
   subListLink.download = `sub list-${filename1}.txt`;
