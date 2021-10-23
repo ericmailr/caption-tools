@@ -67,6 +67,7 @@ a {
 
 #roster-inputs-container {
   width: 70%;
+  min-width: 850px;
 }
 
 #submitSchedule {
