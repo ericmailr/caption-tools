@@ -236,7 +236,10 @@ const getNameAsArray = (fullName) => {
   fullName = fullName.trim();
   fullName = fullName.normalize("NFD").replace(/[\u0300-\u036f]|[0-9]/g, "");
   fullName = fullName.replace(/ *\([^)]*\) */g, "");
-  //fullName = fullName.replace(/[^a-zA-Z ` '\-\.\*\,]/g, "");
+  if (fullName.includes("Hear how to pronounce")) {
+    fullName = fullName.split("Hear how to pronounce");
+    fullName = fullName[0];
+  }
   if (fullName.includes("\t")) {
     let col = playersColNumInput.value ? playersColNumInput.value : 1;
     fullName = fullName.split("\t");
