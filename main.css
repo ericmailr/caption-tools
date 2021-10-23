@@ -58,9 +58,15 @@ a {
 
 #roster-container {
   display: flex;
-  flex-direction: column;
-  width: 50%;
+  flex-direction: row;
+  justify-content: center;
   min-width: 700px;
+  width: 100%;
+  height: 100vh;
+}
+
+#roster-inputs-container {
+  width: 70%;
 }
 
 #submitSchedule {
@@ -75,16 +81,42 @@ a {
 
 #submitRoster {
   width: 80%;
+}
+
+.process-buttons {
+  align-self: flex-start;
+  border: none;
+  color: white;
+  background: none;
+  outline: none;
+  background-color: rgba(0, 31, 63, 0.65);
+  border-radius: 0 4px 0 4px;
+  margin: 0;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.download-buttons {
   padding: 10px;
-  margin: auto;
-  background-color: #001f3f;
-  background-color: #1f305e;
-  background-color: rgba(31, 48, 94, 0.85);
+  margin: 10px;
   background-color: #001f3f;
   color: white;
   border-radius: 10px;
   cursor: pointer;
   transition: opacity 0.15s ease-in-out;
+  font-size: 1em;
+  white-space: nowrap;
+}
+
+#downloads-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  width: 10%;
+  margin-bottom: 30px;
 }
 
 #submitSchedule:hover {
@@ -92,6 +124,10 @@ a {
 }
 
 #submitRoster:hover {
+  opacity: 0.91;
+}
+
+.download-buttons:hover {
   opacity: 0.91;
 }
 
@@ -117,6 +153,7 @@ textarea {
   border-radius: 4px;
   padding-top: 6px;
   font: inherit;
+  margin-bottom: 0;
 }
 
 #tranSlots {
@@ -153,6 +190,12 @@ textarea {
 #alphabetizeInput {
   border-top: none;
   border-width: 0;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+
+input[type="checkbox" i] {
+  padding-bottom: 8px;
 }
 
 #team-shared-container {
@@ -178,6 +221,14 @@ textarea {
   width: 100%;
 }
 
+#suffix-input {
+  text-align: center;
+}
+
+#prefix-input {
+  text-align: center;
+}
+
 #shared-game-info {
   display: flex;
   margin-top: 10px;
@@ -197,7 +248,6 @@ textarea {
 
 #team-shared-container textarea {
   margin-bottom: 0;
-  text-align: center;
   white-space: nowrap;
 }
 
@@ -228,28 +278,7 @@ textarea {
 .half-width-textarea-container > textarea {
   box-sizing: border-box;
   width: 100%;
-  text-align: center;
   white-space: nowrap;
-}
-
-#separate-submit-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 0;
-  margin: auto;
-  width: 80%;
-}
-
-#separate-submit-container input {
-  background-color: rgba(31, 48, 94, 0.85);
-  background-color: #001f3f;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: opacity 0.15s ease-in-out;
-  height: 2.2em;
-  font-size: 1em;
-  padding: 0;
 }
 
 .halves-container {
@@ -300,13 +329,18 @@ textarea {
 #checkbox-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   background-color: #001f3f;
   border-color: white;
   color: white;
   padding: 7px;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+#checkbox-container * {
+  cursor: pointer;
 }
 
 #mini-input-container {
@@ -352,21 +386,39 @@ input[type="number" i] {
 }
 
 #showNotesButton {
-  width: 200px;
-  padding: 5px;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 10px;
+  align-self: flex-end;
+  text-decoration: none;
   align-self: center;
+  margin-top: 30px;
+}
+
+#notes-container {
+  display: flex;
+  flex-direction: column;
+  width: 0;
+  padding-right: 30px;
+  margin-top: 10px;
 }
 
 #notes {
   display: none;
   justify-content: space-around;
   color: black;
-  width: 50%;
+  padding-left: 0;
+  margin-top: 1px;
+  background-color: rgba(0, 31, 63, 0.5);
+  color: white;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
 }
 
 li {
   list-style: none;
-  width: 40%;
 }
 
 @media screen and (max-width: 700px) {

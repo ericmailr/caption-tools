@@ -21,10 +21,34 @@ const rawRoster2Input = document.getElementById("rawRoster2");
 const team1NamesInput = document.getElementById("team1NameInput");
 const team2NamesInput = document.getElementById("team2NameInput");
 
+const processButtons = document.getElementsByClassName("process-buttons");
+let height = processButtons[0].offsetHeight + 3;
+processButtons[0].style.marginTop = `-${height}px`;
+processButtons[1].style.marginTop = `-${height}px`;
+
+processButtons[0].addEventListener("click", () => {
+  saveInputs();
+  let [r, w, t, playersOnlyRoster] = getRoster(
+    team1NamesInput,
+    rawRoster1Input,
+    coaches1Input
+  );
+  rawRoster1Input.value = playersOnlyRoster;
+});
+
+processButtons[1].addEventListener("click", () => {
+  saveInputs();
+  let [r, w, t, playersOnlyRoster] = getRoster(
+    team2NamesInput,
+    rawRoster2Input,
+    coaches2Input
+  );
+  rawRoster2Input.value = playersOnlyRoster;
+});
+
 const alphabetizeInput = document.getElementById("alphabetizeInput");
 const suffixInput = document.getElementById("suffix-input");
 let suffix = "prame";
-const tranSlotsP = document.getElementById("tranSlots");
 
 const venueInput = document.getElementById("venue-input");
 const coaches1Input = document.getElementById("coaches1Input");
@@ -43,9 +67,19 @@ const notes = document.getElementById("notes");
 notes.style.display = "none";
 const showNotesButton = document.getElementById("showNotesButton");
 const toggleNotes = () => {
+  console.log("start: " + notes.parentElement.style.width);
+  notes.parentElement.style.width =
+    notes.style.display === "none" ? "17%" : "0px";
   notes.style.display = notes.style.display === "flex" ? "none" : "flex";
+  console.log("finish: " + notes.parentElement.style.width);
 };
 showNotesButton.addEventListener("click", toggleNotes);
+notes.addEventListener("click", toggleNotes);
+
+const checkboxContainer = document.getElementById("checkbox-container");
+checkboxContainer.addEventListener("click", () => {
+  alphabetizeInput.checked = alphabetizeInput.checked ? false : true;
+});
 
 if (typeof Storage !== "undefined") {
   team1NamesInput.value = localStorage.getItem("team1Names");
@@ -138,7 +172,7 @@ const getTranSlots = () => {
       : `${prefix}06|`;
   tranSlots[6] =
     commentatorNames.length > 1
-      ? `${prefix}|${commentatorNames[1]}`
+      ? `${prefix}07|${commentatorNames[1]}`
       : `${prefix}07|`;
   tranSlots[7] =
     commentatorNames.length > 2
@@ -193,7 +227,6 @@ const printTranSlots = (tranSlots) => {
   tranSlots.forEach((slot) => {
     tranSlotsString += `${slot}\n`;
   });
-  tranSlotsP.innerHTML = tranSlotsString;
   return tranSlotsString;
 };
 
@@ -234,11 +267,8 @@ const getVocabEntries = (entry, isCoach = false, isName = true) => {
     return "";
   }
   entry = entry.trim().replace(/^\s*\n/gm, "");
-  console.log("entry: " + entry);
   if (isName) {
     let [fullName, lastName] = getNameAsArray(entry);
-    console.log("fullname: " + fullName);
-    console.log("lastname: " + lastName);
     entries = "";
     entries += `${fullName}\n${fullName}\\${fullName
       .replace(/\./g, "")

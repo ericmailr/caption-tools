@@ -4,211 +4,206 @@
   <head>
     <title>Caption Tools</title>
     <link href="main.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
     <meta content="utf-8" http-equiv="encoding" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
   <body>
     <div id="container">
-      <ul id="notes">
-        <li>
-          - Work in progress!<br /><br />- All fields are optional.
-          <br /><br />- Be sure to allow chrome to launch multiple automatic
-          downloads (3 txt files). <br /><br />- You can directly paste full
-          roster grid and select the players column number below to get just
-          that column. Not perfect but it works for a lot of rosters.
-        </li>
-        <li>
-          - Symbols/numbers should be auto removed/replaced. <br /><br />
-          - Comma-separated names (last, first or last,first) are fine.<br /><br />OUTPUT:<br />>
-          Roster.txt <br />> Word List.txt <br />&emsp;- fullnames, lastnames,
-          w/ and w/out suffixed spoken form<br />> Sub List (tran slots)
-        </li>
-      </ul>
-      <button id="showNotesButton">Show/Hide Notes</button>
       <div id="roster-container">
-        <div id="teams-main-container">
-          <div id="team1stuff" class="team-stuff">
-            <div class="halves-container">
-              <div class="half-width-textarea-container">
-                <div class="input-label">team one titles</div>
-                <textarea
-                  type="text"
-                  id="team1NameInput"
-                  rows="3"
-                  value="hello"
-                  spellcheck="false"
-                ></textarea>
-              </div>
-              <div class="half-width-textarea-container">
-                <div class="input-label">coaches</div>
-                <textarea
-                  id="coaches1Input"
-                  rows="3"
-                  spellcheck="false"
-                ></textarea>
-              </div>
-            </div>
-            <div class="roster-textarea-container">
-              <div class="input-label">roster one</div>
-              <div>
-                <textarea
-                  placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add to tran slot, up to 5 &#10;&#10; You can paste full grid directly and choose players column."
-                  type="text"
-                  spellcheck="false"
-                  rows="14"
-                  cols="40"
-                  id="rawRoster1"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div id="team2Stuff" class="team-stuff">
-            <div class="halves-container">
-              <div class="half-width-textarea-container">
-                <div class="input-label">team two titles</div>
-                <textarea
-                  type="text"
-                  id="team2NameInput"
-                  rows="3"
-                  spellcheck="false"
-                ></textarea>
-              </div>
-              <div class="half-width-textarea-container">
-                <div class="input-label">coaches</div>
-                <textarea
-                  type="text"
-                  id="coaches2Input"
-                  rows="3"
-                  spellcheck="false"
-                ></textarea>
-              </div>
-            </div>
-            <div class="roster-textarea-container">
-              <div class="input-label">roster two</div>
-              <div>
-                <textarea
-                  placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add to tran slot, up to 5 &#10;&#10; You can paste full grid directly and choose players column."
-                  type="text"
-                  spellcheck="false"
-                  rows="14"
-                  cols="40"
-                  id="rawRoster2"
-                ></textarea>
-              </div>
-            </div>
-          </div>
+        <div id="notes-container">
+          <ul id="notes">
+            <li>
+              - Work in progress!<br /><br />- All fields are optional.
+              <br /><br />- Google Chrome works best.<br /><br />
+              - Allow browser to launch multiple automatic downloads (3 txt
+              files).
+              <br /><br />- You can paste full roster grids directly into a
+              roster box and then select the players column # below to get the
+              player names alone.<br /><br />
+              - Comma-separated names work too.<br /><br />OUTPUT:<br /><br />>
+              Roster.txt <br />> Word List.txt <br />&emsp;- fullnames,
+              lastnames, w/ and w/out suffixed spoken form<br />> Sub List (tran
+              slots)
+            </li>
+          </ul>
         </div>
-        <div id="team-shared-container">
-          <div id="settings">
-            <div id="mini-input-container" class="third-width-container">
-              <div id="checkbox-container">
-                <input
-                  type="checkbox"
-                  id="alphabetizeInput"
-                  name="alphabetizeInput"
-                  value="Alphabetize?"
-                  checked="true"
-                />
-                <label for="alphabetizeInput" style="width: 100%"
-                  >Alphabetize</label
+        <div id="roster-inputs-container">
+          <div id="teams-main-container">
+            <div id="team1stuff" class="team-stuff">
+              <div class="halves-container">
+                <div class="half-width-textarea-container">
+                  <div class="input-label">team one titles</div>
+                  <textarea
+                    type="text"
+                    id="team1NameInput"
+                    rows="4"
+                    value="hello"
+                    spellcheck="false"
+                  ></textarea>
+                </div>
+                <div class="half-width-textarea-container">
+                  <div class="input-label">coaches</div>
+                  <textarea
+                    id="coaches1Input"
+                    rows="4"
+                    spellcheck="false"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="roster-textarea-container">
+                <div class="input-label">roster one</div>
+                <div>
+                  <textarea
+                    placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add name to a tran slot, up to 5 &#10;&#10; Paste full grid directly and choose the players column # below."
+                    type="text"
+                    spellcheck="false"
+                    rows="18"
+                    cols="40"
+                    id="rawRoster1"
+                  ></textarea>
+                </div>
+                <button class="process-buttons">Process!</button>
+              </div>
+            </div>
+            <div id="downloads-container">
+              <button id="submitRoster1" type="submit" class="download-buttons">
+                <i class="fa fa-download"></i> Team 1
+              </button>
+              <button id="submitRoster2" type="submit" class="download-buttons">
+                <i class="fa fa-download"></i> Team 2
+              </button>
+              <button id="submitRoster" type="submit" class="download-buttons">
+                <i class="fa fa-download"></i> Both
+              </button>
+              <button id="showNotesButton" class="download-buttons">
+                Notes
+              </button>
+            </div>
+            <div id="team2Stuff" class="team-stuff">
+              <div class="halves-container">
+                <div class="half-width-textarea-container">
+                  <div class="input-label">team two titles</div>
+                  <textarea
+                    type="text"
+                    id="team2NameInput"
+                    rows="4"
+                    spellcheck="false"
+                  ></textarea>
+                </div>
+                <div class="half-width-textarea-container">
+                  <div class="input-label">coaches</div>
+                  <textarea
+                    type="text"
+                    id="coaches2Input"
+                    rows="4"
+                    spellcheck="false"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="roster-textarea-container">
+                <div class="input-label">roster two</div>
+                <div>
+                  <textarea
+                    placeholder="e.g.&#10;&#10;Michael Jordan&#10;Dončić, Luka77* &#10;&#10; * or ` to add name to a tran slot, up to 5 &#10;&#10; Paste full grid directly and choose the players column # below."
+                    type="text"
+                    spellcheck="false"
+                    rows="18"
+                    cols="40"
+                    id="rawRoster2"
+                  ></textarea>
+                </div>
+                <button class="process-buttons">Process!</button>
+              </div>
+            </div>
+          </div>
+          <div id="team-shared-container">
+            <div id="settings">
+              <div id="mini-input-container" class="third-width-container">
+                <div id="checkbox-container">
+                  <input
+                    type="checkbox"
+                    id="alphabetizeInput"
+                    name="alphabetizeInput"
+                    value="Alphabetize?"
+                    checked="true"
+                  />
+                  <label for="alphabetizeInput">Alphabetize</label>
+                </div>
+                <div id="player-col-number-input">
+                  <div class="input-label">players col #</div>
+                  <input
+                    type="number"
+                    id="player-col-number"
+                    name="quantity"
+                    min="1"
+                    max="5"
+                    value="1"
+                    placeholder="(pasted grid)"
+                    spellcheck="false"
+                  />
+                </div>
+              </div>
+              <div class="third-width-container">
+                <div class="input-label">suffix</div>
+                <textarea
+                  type="text"
+                  id="suffix-input"
+                  value="prame"
+                  rows="1"
+                  spellcheck="false"
+                >
+prame</textarea
                 >
               </div>
-              <div id="player-col-number-input">
-                <div class="input-label">players col #</div>
-                <input
-                  type="number"
-                  id="player-col-number"
-                  name="quantity"
-                  min="1"
-                  max="5"
-                  value="1"
-                  placeholder="(pasted grid)"
+              <div class="third-width-container">
+                <div class="input-label">tran prefix</div>
+                <textarea
+                  type="text"
+                  id="prefix-input"
+                  value="tran"
+                  rows="1"
                   spellcheck="false"
-                />
+                >
+tran</textarea
+                >
               </div>
             </div>
-            <div class="third-width-container">
-              <div class="input-label">suffix</div>
-              <textarea
-                type="text"
-                id="suffix-input"
-                value="prame"
-                rows="1"
-                spellcheck="false"
-              >
-prame</textarea
-              >
-            </div>
-            <div class="third-width-container">
-              <div class="input-label">tran prefix</div>
-              <textarea
-                type="text"
-                id="prefix-input"
-                value="tran"
-                rows="1"
-                spellcheck="false"
-              >
-tran</textarea
-              >
-            </div>
-          </div>
-          <div id="shared-game-info">
-            <div>
-              <div class="input-label">venue</div>
-              <textarea
-                type="text"
-                id="venue-input"
-                rows="3"
-                spellcheck="false"
-              ></textarea>
-            </div>
-            <div>
-              <div class="input-label">officiating crew</div>
-              <textarea
-                type="text"
-                id="officiatorsInput"
-                rows="3"
-                spellcheck="false"
-              ></textarea>
-            </div>
-            <div>
-              <div class="input-label">commentators</div>
-              <textarea
-                type="text"
-                id="commentatorsInput"
-                rows="3"
-                spellcheck="false"
-              ></textarea>
+            <div id="shared-game-info">
+              <div>
+                <div class="input-label">venue</div>
+                <textarea
+                  type="text"
+                  id="venue-input"
+                  rows="4"
+                  spellcheck="false"
+                ></textarea>
+              </div>
+              <div>
+                <div class="input-label">officiating crew</div>
+                <textarea
+                  type="text"
+                  id="officiatorsInput"
+                  rows="4"
+                  spellcheck="false"
+                ></textarea>
+              </div>
+              <div>
+                <div class="input-label">commentators</div>
+                <textarea
+                  type="text"
+                  id="commentatorsInput"
+                  rows="4"
+                  spellcheck="false"
+                ></textarea>
+              </div>
             </div>
           </div>
         </div>
-        <div id="separate-submit-container">
-          <div class="half-width-textarea-container">
-            <input
-              id="submitRoster1"
-              type="submit"
-              spellcheck="false"
-              value="Just Team 1"
-            />
-          </div>
-          <div class="half-width-textarea-container">
-            <input
-              id="submitRoster2"
-              type="submit"
-              spellcheck="false"
-              value="Just Team 2"
-            />
-          </div>
-        </div>
-        <input
-          id="submitRoster"
-          type="submit"
-          spellcheck="false"
-          value="Get Match Roster, Word List, Sub List"
-        />
-
-        <p id="tranSlots"></p>
       </div>
       <div id="schedule-container">
         <div class="input-label">intranet schedule</div>
