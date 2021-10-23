@@ -46,6 +46,29 @@ const toggleNotes = () => {
   notes.style.display = notes.style.display === "flex" ? "none" : "flex";
 };
 showNotesButton.addEventListener("click", toggleNotes);
+if (typeof Storage !== "undefined") {
+  team1NamesInput.value = localStorage.getItem("team1Names");
+  team2NamesInput.value = localStorage.getItem("team2Names");
+  coaches1Input.value = localStorage.getItem("coaches1");
+  coaches2Input.value = localStorage.getItem("coaches2");
+  rawRoster1Input.value = localStorage.getItem("roster1");
+  rawRoster2Input.value = localStorage.getItem("roster2");
+  playersColNumInput.value =
+    localStorage.getItem("playersColumn") === ""
+      ? 1
+      : localStorage.getItem("playersColumn");
+  suffixInput.value =
+    localStorage.getItem("suffix") === ""
+      ? "prame"
+      : localStorage.getItem("suffix");
+  tranPrefixInput.value =
+    localStorage.getItem("prefix") === ""
+      ? "tran"
+      : localStorage.getItem("prefix");
+  venueInput.value = localStorage.getItem("venue");
+  officiatorsInput.value = localStorage.getItem("officials");
+  commentatorsInput.value = localStorage.getItem("commentators");
+}
 
 const prepTime = 15;
 let tranSlotNames = [];
@@ -274,6 +297,23 @@ const processRawArray = (rawArray) => {
   return alphabeticalRosterArray;
 };
 
+const saveInputs = () => {
+  if (typeof Storage !== "undefined") {
+    localStorage.setItem("team1Names", `${team1NamesInput.value}`);
+    localStorage.setItem("team2Names", `${team2NamesInput.value}`);
+    localStorage.setItem("coaches1", `${coaches1Input.value}`);
+    localStorage.setItem("coaches2", `${coaches2Input.value}`);
+    localStorage.setItem("roster1", `${rawRoster1Input.value}`);
+    localStorage.setItem("roster2", `${rawRoster2Input.value}`);
+    localStorage.setItem("playersColumn", `${playersColNumInput.value}`);
+    localStorage.setItem("suffix", `${suffixInput.value}`);
+    localStorage.setItem("prefix", `${tranPrefixInput.value}`);
+    localStorage.setItem("venue", `${venueInput.value}`);
+    localStorage.setItem("officials", `${officiatorsInput.value}`);
+    localStorage.setItem("commentators", `${commentatorsInput.value}`);
+  }
+};
+
 const getRoster = (
   teamNamesInput,
   rawRosterInput,
@@ -338,6 +378,7 @@ const getRoster = (
 };
 
 const getBigRoster = () => {
+  saveInputs();
   tranSlotNames = [];
   let [r1, w1, t1, playersOnlyRoster1, playersOnlyWordList] = getRoster(
     team1NamesInput,
@@ -588,6 +629,7 @@ submitRoster1Button.addEventListener("click", () => {
     tranSlots
   );
   rawRoster1Input.value = playersOnlyRoster;
+  saveInputs();
   downloadFiles(r, w, t);
 });
 
@@ -600,5 +642,6 @@ submitRoster2Button.addEventListener("click", () => {
     coaches2Input
   );
   rawRoster2Input.value = playersOnlyRoster;
+  saveInputs();
   downloadFiles(r, w, t);
 });

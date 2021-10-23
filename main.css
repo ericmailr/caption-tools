@@ -198,6 +198,7 @@ textarea {
 #team-shared-container textarea {
   margin-bottom: 0;
   text-align: center;
+  white-space: nowrap;
 }
 
 .roster-textarea-container {
@@ -281,6 +282,7 @@ textarea {
   display: flex;
   justify-content: center;
   margin-bottom: calc(-1em - 3px);
+  white-space: nowrap;
 }
 
 input {
@@ -301,6 +303,7 @@ textarea {
   justify-content: space-around;
   align-items: center;
   background-color: #001f3f;
+  border-color: white;
   color: white;
   padding: 7px;
   border-radius: 10px;
@@ -325,7 +328,7 @@ input[type="number" i] {
 }
 
 #mini-input-container > * {
-  width: 46%;
+  width: 44%;
 }
 
 #mini-input-container textarea {
