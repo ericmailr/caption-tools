@@ -81,7 +81,7 @@ a {
 }
 
 #submitRoster {
-  width: 80%;
+  width: 90%;
 }
 
 .process-buttons {
@@ -116,7 +116,7 @@ a {
   justify-content: flex-end;
   align-items: center;
   padding: 0;
-  width: 10%;
+  width: 12%;
   margin-bottom: 30px;
 }
 
