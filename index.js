@@ -77,8 +77,10 @@ showNotesButton.addEventListener("click", toggleNotes);
 notes.addEventListener("click", toggleNotes);
 
 const checkboxContainer = document.getElementById("checkbox-container");
-checkboxContainer.addEventListener("click", () => {
-  alphabetizeInput.checked = alphabetizeInput.checked ? false : true;
+checkboxContainer.addEventListener("click", (e) => {
+  console.log(e.target);
+  if (e.target.id !== "alphabetizeInput")
+    alphabetizeInput.checked = alphabetizeInput.checked ? false : true;
 });
 
 if (typeof Storage !== "undefined") {
