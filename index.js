@@ -46,6 +46,7 @@ const toggleNotes = () => {
   notes.style.display = notes.style.display === "flex" ? "none" : "flex";
 };
 showNotesButton.addEventListener("click", toggleNotes);
+
 if (typeof Storage !== "undefined") {
   team1NamesInput.value = localStorage.getItem("team1Names");
   team2NamesInput.value = localStorage.getItem("team2Names");
@@ -57,14 +58,12 @@ if (typeof Storage !== "undefined") {
     localStorage.getItem("playersColumn") === ""
       ? 1
       : localStorage.getItem("playersColumn");
-  suffixInput.value =
-    localStorage.getItem("suffix") === ""
-      ? "prame"
-      : localStorage.getItem("suffix");
-  tranPrefixInput.value =
-    localStorage.getItem("prefix") === ""
-      ? "tran"
-      : localStorage.getItem("prefix");
+  suffixInput.value = !localStorage.getItem("suffix")
+    ? "prame"
+    : localStorage.getItem("suffix");
+  tranPrefixInput.value = !localStorage.getItem("prefix")
+    ? "tran"
+    : localStorage.getItem("prefix");
   venueInput.value = localStorage.getItem("venue");
   officiatorsInput.value = localStorage.getItem("officials");
   commentatorsInput.value = localStorage.getItem("commentators");
