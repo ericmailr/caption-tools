@@ -54,10 +54,9 @@ if (typeof Storage !== "undefined") {
   coaches2Input.value = localStorage.getItem("coaches2");
   rawRoster1Input.value = localStorage.getItem("roster1");
   rawRoster2Input.value = localStorage.getItem("roster2");
-  playersColNumInput.value =
-    localStorage.getItem("playersColumn") === ""
-      ? 1
-      : localStorage.getItem("playersColumn");
+  playersColNumInput.value = !localStorage.getItem("playersColumn")
+    ? 1
+    : localStorage.getItem("playersColumn");
   suffixInput.value = !localStorage.getItem("suffix")
     ? "prame"
     : localStorage.getItem("suffix");
