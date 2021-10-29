@@ -370,9 +370,7 @@ const getRoster = (
     roster += teamName + "\n";
     wordList += getVocabEntries(teamName, false, false);
   });
-  venueNames.forEach((name) => {
-    wordList += "\n" + getVocabEntries(name, false, false) + "\n";
-  });
+
   wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
   roster += venueName + "\n";
 
@@ -383,7 +381,6 @@ const getRoster = (
     roster += playerName + "\n";
     playersOnlyRoster += playerName + "\n";
   });
-  let playersOnlyWordList = wordList;
 
   wordList += "\n";
   roster += "\nCoaches:\n";
@@ -392,6 +389,10 @@ const getRoster = (
     roster += coachName + "\n";
   });
 
+  let playersOnlyWordList = wordList;
+  venueNames.forEach((name) => {
+    wordList += "\n" + getVocabEntries(name, false, false) + "\n";
+  });
   wordList.replace("\n\n\n", "\n");
   wordList += "\n";
   roster += "\nCommentators:\n";
