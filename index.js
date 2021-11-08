@@ -67,18 +67,18 @@ const notes = document.getElementById("notes");
 notes.style.display = "none";
 const showNotesButton = document.getElementById("showNotesButton");
 const toggleNotes = () => {
-  console.log("start: " + notes.parentElement.style.width);
+  //console.log("start: " + notes.parentElement.style.width);
   notes.parentElement.style.width =
     notes.style.display === "none" ? "17%" : "0px";
   notes.style.display = notes.style.display === "flex" ? "none" : "flex";
-  console.log("finish: " + notes.parentElement.style.width);
+  //console.log("finish: " + notes.parentElement.style.width);
 };
 showNotesButton.addEventListener("click", toggleNotes);
 notes.addEventListener("click", toggleNotes);
 
 const checkboxContainer = document.getElementById("checkbox-container");
 checkboxContainer.addEventListener("click", (e) => {
-  console.log(e.target);
+  //console.log(e.target);
   if (e.target.id !== "alphabetizeInput")
     alphabetizeInput.checked = alphabetizeInput.checked ? false : true;
 });
@@ -294,7 +294,8 @@ const getVocabEntries = (entry, isCoach = false, isName = true) => {
   } else {
     entries = "";
     entries += entry + "\n";
-    entries += `${entry}\\${entry} ${suffix}`;
+    console.log("in getVocabEntries: " + entries);
+    entries += `${entry}\\${entry} ${suffix}\n`;
   }
   return entries;
 };
@@ -371,11 +372,11 @@ const getRoster = (
     wordList += getVocabEntries(teamName, false, false);
   });
 
+  console.log("wordList in getRoster: " + wordList);
   wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
   roster += venueName + "\n";
 
   let playersOnlyRoster = "";
-
   rosterArray.forEach((playerName) => {
     wordList += getVocabEntries(playerName);
     roster += playerName + "\n";
@@ -523,9 +524,9 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   ].join(":");
   document.body.appendChild(rosterLink);
   document.body.appendChild(wordListLink);
-  console.log("roster:\n" + roster);
-  console.log("wordList:\n" + wordList);
-  console.log("subList:\n" + printTranSlots(tranSlots));
+  //console.log("roster:\n" + roster);
+  //console.log("wordList:\n" + wordList);
+  //console.log("subList:\n" + printTranSlots(tranSlots));
   rosterLink.click();
   wordListLink.click();
   subListLink.click();
