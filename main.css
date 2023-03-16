@@ -4,9 +4,8 @@ body {
   padding: 0;
   height: 100vh;
   background-color: #dddddd;
-  overflow: auto;
+  overflow: hidden;
   font-family: Georgia, serif;
-  overflow-x: hidden;
 }
 
 a {

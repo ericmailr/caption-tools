@@ -3,13 +3,8 @@
 // handle jr, III, II
 // should probably auto cap first letters
 // could make a scraper for sidearm grids, just grab player name class, coaches would be a little more annoying
-// add custom prep time for schedule
 
 // add a   check roster without downloading    button
-
-const submitScheduleButton = document.getElementById("submitSchedule");
-const rawScheduleInput = document.getElementById("rawSchedule");
-const scheduleContainerDiv = document.getElementById("scheduleContainer");
 
 const submitRosterButton = document.getElementById("submitRoster");
 const submitRoster1Button = document.getElementById("submitRoster1");
@@ -67,18 +62,15 @@ const notes = document.getElementById("notes");
 notes.style.display = "none";
 const showNotesButton = document.getElementById("showNotesButton");
 const toggleNotes = () => {
-  //console.log("start: " + notes.parentElement.style.width);
   notes.parentElement.style.width =
     notes.style.display === "none" ? "17%" : "0px";
   notes.style.display = notes.style.display === "flex" ? "none" : "flex";
-  //console.log("finish: " + notes.parentElement.style.width);
 };
 showNotesButton.addEventListener("click", toggleNotes);
 notes.addEventListener("click", toggleNotes);
 
 const checkboxContainer = document.getElementById("checkbox-container");
 checkboxContainer.addEventListener("click", (e) => {
-  //console.log(e.target);
   if (e.target.id !== "alphabetizeInput")
     alphabetizeInput.checked = alphabetizeInput.checked ? false : true;
 });
@@ -107,16 +99,6 @@ if (typeof Storage !== "undefined") {
 const prepTime = 15;
 let tranSlotNames = [];
 let tranSlots;
-
-const getScheduleFileSuffix = () => {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, "0");
-  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  var yyyy = today.getFullYear();
-  var hh = today.getHours();
-  var m = today.getMinutes();
-  return `${mm}${dd}${yyyy}${hh}${m}`;
-};
 
 const compareStrings = (a, b) => {
   if (a < b) return -1;
@@ -294,7 +276,6 @@ const getVocabEntries = (entry, isCoach = false, isName = true) => {
   } else {
     entries = "";
     entries += entry + "\n";
-    console.log("in getVocabEntries: " + entries);
     entries += `${entry}\\${entry} ${suffix}\n`;
   }
   return entries;
@@ -372,7 +353,6 @@ const getRoster = (
     wordList += getVocabEntries(teamName, false, false);
   });
 
-  console.log("wordList in getRoster: " + wordList);
   wordList += "\n" + getVocabEntries(venueName, false, false) + "\n";
   roster += venueName + "\n";
 
@@ -524,9 +504,6 @@ const downloadFiles = (roster, wordList, tranSlots) => {
   ].join(":");
   document.body.appendChild(rosterLink);
   document.body.appendChild(wordListLink);
-  //console.log("roster:\n" + roster);
-  //console.log("wordList:\n" + wordList);
-  //console.log("subList:\n" + printTranSlots(tranSlots));
   rosterLink.click();
   wordListLink.click();
   subListLink.click();
@@ -546,112 +523,6 @@ const formatDate = (dateObject) => {
   let year = dateObject.getFullYear();
   return `${month}/${day}/${year}`;
 };
-
-const getCSV = () => {
-  const rawSchedule = rawScheduleInput.value;
-  if (rawSchedule != "") {
-    let dates = rawSchedule.match(/((\d\d)|(\d))\/((\d\d)|(\d))\/20\d\d/g);
-    let times = rawSchedule.match(/((\d\d)|(\d)):\d\d(A|P)M/g);
-    let descriptions = rawSchedule.match(/Description: .*/g);
-
-    if (descriptions) {
-      descriptions = descriptions.map((d) => d.substring(13, d.length));
-    }
-
-    const militarizeTime = (time) => {
-      let hour = parseInt(time.substring(0, 2));
-      let minutes = time.substring(3, 5);
-      if (time.charAt(time.length - 2) === "A") {
-        return hour == 12 ? "00" + ":" + minutes : time.substring(0, 5);
-      } else {
-        let newHour = hour < 12 ? hour + 12 : 12;
-        let newTime = newHour + ":" + time.substring(3, 5);
-        return newTime;
-      }
-    };
-
-    dates.forEach((date, i) => {
-      dates[i] = new Date(dates[i]);
-    });
-
-    times.forEach((t, i) => {
-      times[i] = militarizeTime(t);
-    });
-
-    let endDates = JSON.parse(JSON.stringify(dates));
-
-    times.forEach((t, i) => {
-      // add prep time
-      if (i % 2 === 0) {
-        let hour = parseInt(t.substring(0, 2));
-        let minutes = parseInt(t.substring(3, 5));
-        if (minutes < prepTime) {
-          let newHour = hour - 1;
-          if (hour == 0) {
-            newHour = 23;
-
-            let tempDate = new Date(dates[i / 2]);
-            tempDate.setDate(tempDate.getDate() - 1);
-            dates[i / 2] = tempDate;
-          }
-          if (newHour < 10) {
-            newHour = "0" + newHour;
-          }
-          let newMinutes = (60 - (prepTime - minutes)) % 60;
-          if (newMinutes < 10) {
-            newMinutes = "0" + newMinutes;
-          }
-          times[i] = newHour + ":" + newMinutes;
-        } else {
-          let newMinutes = minutes - prepTime;
-          if (newMinutes < 10) {
-            newMinutes = "0" + newMinutes;
-          }
-          if (hour < 10) {
-            hour = "0" + hour;
-          }
-          times[i] = hour + ":" + newMinutes;
-        }
-      }
-
-      if (i % 2 == 1) {
-        if (times[i].substring(0, 2) == "00") {
-          let endDate = new Date(dates[(i - 1) / 2]);
-          endDate.setDate(endDate.getDate() + 1);
-          endDates[(i - 1) / 2] = formatDate(endDate);
-        }
-      }
-    });
-
-    dates.forEach((date, i) => {
-      dates[i] = formatDate(new Date(dates[i]));
-      endDates[i] = formatDate(new Date(endDates[i]));
-    });
-
-    let csvContent = "";
-    csvContent +=
-      "Subject, Start Date, Start Time, End Date, End Time, All Day Event, Description, Private,\n";
-
-    dates.forEach((date, i) => {
-      csvContent += `Work, ${dates[i]}, ${times[2 * i]}, ${endDates[i]}, ${
-        times[2 * i + 1]
-      }, false, ${descriptions?.[i]}, true,\n`;
-    });
-    console.log(csvContent);
-
-    window.URL = window.webkitURL || window.URL;
-    var contentType = "text/csv";
-    var csvFile = new Blob([csvContent], { type: contentType });
-    var a = document.createElement("a");
-    a.download = `work-schedule-${getScheduleFileSuffix()}.csv`;
-    a.href = window.URL.createObjectURL(csvFile);
-    a.dataset.downloadurl = [contentType, a.download, a.href].join(":");
-    document.body.appendChild(a);
-    a.click();
-  }
-};
-
-submitScheduleButton.addEventListener("click", getCSV);
 
 submitRosterButton.addEventListener("click", getBigRoster);
 submitRoster1Button.addEventListener("click", () => {
